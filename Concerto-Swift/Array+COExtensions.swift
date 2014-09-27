@@ -9,6 +9,7 @@
 import Foundation
 
 extension Array {
+    
     func find(includedElement: T -> Bool) -> T? {
         for (idx, element) in enumerate(self) {
             if includedElement(element) {
@@ -18,4 +19,24 @@ extension Array {
         
         return nil
     }
+    
+    func indexOf(includedElement: T -> Bool) -> Int? {
+        for (idx, element) in enumerate(self) {
+            if includedElement(element) {
+                return idx
+            }
+        }
+        
+        return nil
+    }
+    
+    func foreach(f: T -> ()) {
+        for element in self { f(element) }
+    }
+}
+
+func removeObjectIdenticalTo<T: AnyObject>(value: T, #fromArray: [T]) -> [T] {
+    return fromArray.filter({
+        $0 === value
+    })
 }

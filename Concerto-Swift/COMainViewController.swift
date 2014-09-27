@@ -9,7 +9,7 @@
 import Foundation
 import Cocoa
 
-class COMainViewController : COViewController {
+class COMainViewController : COViewController, COPlayQueueDelegate {
     
     @IBOutlet weak var pauseButton: NSButton?
     @IBOutlet weak var nextButton: NSButton?
@@ -19,6 +19,16 @@ class COMainViewController : COViewController {
     @IBOutlet weak var repeatCheckbox: NSButton?
     
     let playQueue = COPlayQueue.sharedInstance
+    
+    override init() {
+        super.init()
+        playQueue.addDelegate(self)
+    }
+    
+    override init(coder: NSCoder!) {
+        super.init(coder: coder)
+        playQueue.addDelegate(self)
+    }
     
     @IBAction func togglePlay(sender: AnyObject) {
         if playQueue.playing {
@@ -44,5 +54,9 @@ class COMainViewController : COViewController {
         if let button = sender as? NSButton {
             playQueue.repeat = button.state == NSOnState
         }
+    }
+    
+    func queueDidStartPlaying() {
+        Utilities.log("The protocol works!!")
     }
 }

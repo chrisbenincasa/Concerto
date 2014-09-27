@@ -9,6 +9,11 @@
 import Foundation
 import AVFoundation
 
+@objc protocol COPlayQueueDelegate : class {
+    optional func queueDidStartPlaying()
+    optional func queueDidChangeSongs(newSong: COSong, lastSong: COSong?)
+}
+
 class COPlayQueue : NSObject, AVAudioPlayerDelegate {
     class var sharedInstance : COPlayQueue {
         struct Static {
@@ -24,10 +29,20 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
     var pendingPlayer: AVAudioPlayer?
     var repeat: Bool = false
     var playing: Bool = false
+    var observers: [COPlayQueueDelegate] = []
     
     override init() {
         self.songs = []
         self.playing = false
+    }
+    
+    func addDelegate(d: COPlayQueueDelegate) {
+        Utilities.log("Adding delegate to play queue \(d)")
+        observers.append(d)
+    }
+    
+    func removeDelegate(d: COPlayQueueDelegate) {
+        observers = removeObjectIdenticalTo(d, fromArray: observers)
     }
     
     func playSongAtIndex(index: Int) {
@@ -104,6 +119,8 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
             Utilities.log("setting next to \(next.name)")
             addPendingItem(next)
         }
+        
+        observers.foreach { $0.queueDidStartPlaying!() }
     }
     
     func pause() {

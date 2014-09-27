@@ -27,6 +27,7 @@
 		1486AD6119CF6C0A00FE77E9 /* COSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1486AD6019CF6C0A00FE77E9 /* COSong.swift */; };
 		1498CA4419D6EE74003C6D1B /* Array+COExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498CA4319D6EE74003C6D1B /* Array+COExtensions.swift */; };
 		1498CA4619D6EEE2003C6D1B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498CA4519D6EEE2003C6D1B /* Utilities.swift */; };
+		1498CA4819D6FA03003C6D1B /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498CA4719D6FA03003C6D1B /* Observable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		1486AD6019CF6C0A00FE77E9 /* COSong.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COSong.swift; sourceTree = "<group>"; };
 		1498CA4319D6EE74003C6D1B /* Array+COExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+COExtensions.swift"; sourceTree = "<group>"; };
 		1498CA4519D6EEE2003C6D1B /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		1498CA4719D6FA03003C6D1B /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 				1416D0B719CF830700F68BDE /* COOperation.swift */,
 				1498CA4319D6EE74003C6D1B /* Array+COExtensions.swift */,
 				1498CA4519D6EEE2003C6D1B /* Utilities.swift */,
+				1498CA4719D6FA03003C6D1B /* Observable.swift */,
 			);
 			path = "Concerto-Swift";
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1486AD6119CF6C0A00FE77E9 /* COSong.swift in Sources */,
+				1498CA4819D6FA03003C6D1B /* Observable.swift in Sources */,
 				145124AB19CF1016002AC72A /* AppDelegate.swift in Sources */,
 				1498CA4619D6EEE2003C6D1B /* Utilities.swift in Sources */,
 				145124DF19CF4A1F002AC72A /* COViewController.swift in Sources */,
@@ -411,6 +415,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "Concerto-Swift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -422,6 +427,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "Concerto-Swift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
