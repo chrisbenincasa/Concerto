@@ -6,15 +6,21 @@
 //  Copyright (c) 2014 Christian Benincasa. All rights reserved.
 //
 
+
 import Cocoa
+import AVFoundation
 
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
-
+    @IBOutlet weak var preferencesWindow: NSWindow!
+    @IBOutlet weak var mainViewController: COMainViewController!
+    @IBOutlet weak var tableSource: COTableView!
+    var preferencesController: COPreferencesWindowController?
+    let playQueue = COPlayQueue()
 
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
-        // Insert code here to initialize your application
+        
     }
 
     func applicationWillTerminate(aNotification: NSNotification?) {
@@ -156,6 +162,53 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // If we got here, it is time to quit.
         return .TerminateNow
     }
-
+    
+    @IBAction func openFile(sender: AnyObject!) {
+        let panel: NSOpenPanel = NSOpenPanel()
+        panel.allowsMultipleSelection = true
+        panel.canChooseDirectories = false
+        if NSFileHandlingPanelOKButton == panel.runModal() {
+            let urls: NSArray = panel.URLs
+            
+            if let urlArr = urls as? [NSURL] {
+                let context = self.managedObjectContext
+                let songs = urlArr.map({ (url: NSURL) -> COSong in
+                    let s: COSong = context!.createEntity(ConcertoEntity.Song)
+                    let a: COArtist = context!.createEntity(ConcertoEntity.Artist)
+                    
+                    let asset = AVURLAsset(URL: url, options: nil)
+                    let titles = AVMetadataItem.metadataItemsFromArray(asset.commonMetadata, withKey: AVMetadataCommonKeyTitle, keySpace: AVMetadataKeySpaceCommon) as [AVMetadataItem]
+                    let artists = AVMetadataItem.metadataItemsFromArray(asset.commonMetadata, withKey: AVMetadataCommonKeyArtist, keySpace: AVMetadataKeySpaceCommon) as [AVMetadataItem]
+                    
+                    s.artist = a
+                    
+                    if let title = titles.first {
+                        s.name = title.stringValue
+                    }
+                    if let artist = artists.first {
+                        a.name = artist.stringValue
+                    }
+                    
+                    s.url = url.absoluteString!
+                    return s
+                })
+                
+                COPlayQueue.sharedInstance.enqueue(songs)
+                if let tv = tableSource.myTableView {
+                    tv.reloadData()
+                }
+                COPlayQueue.sharedInstance.enqueue(songs)
+            }
+        }
+    }
+    
+    // Preferences Window
+    @IBAction func openPreferencesWindow(sender: AnyObject!) {
+        preferencesController = COPreferencesWindowController(windowNibName: "Preferences")
+        preferencesController!.showWindow(sender)
+    }
+    
+    // Implement Open With...
+    
 }
 

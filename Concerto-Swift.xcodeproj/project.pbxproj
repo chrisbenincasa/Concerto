@@ -7,12 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1416D0B619CF730D00F68BDE /* NSManagedObjectContext+COAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1416D0B519CF730D00F68BDE /* NSManagedObjectContext+COAdditions.swift */; };
+		1416D0B819CF830700F68BDE /* COOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1416D0B719CF830700F68BDE /* COOperation.swift */; };
 		145124A919CF1016002AC72A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145124A819CF1016002AC72A /* main.swift */; };
 		145124AB19CF1016002AC72A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145124AA19CF1016002AC72A /* AppDelegate.swift */; };
 		145124AE19CF1016002AC72A /* Concerto_Swift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 145124AC19CF1016002AC72A /* Concerto_Swift.xcdatamodeld */; };
 		145124B019CF1016002AC72A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 145124AF19CF1016002AC72A /* Images.xcassets */; };
 		145124B319CF1016002AC72A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 145124B119CF1016002AC72A /* MainMenu.xib */; };
 		145124BF19CF1016002AC72A /* Concerto_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145124BE19CF1016002AC72A /* Concerto_SwiftTests.swift */; };
+		145124C919CF10A5002AC72A /* COTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145124C819CF10A5002AC72A /* COTableView.swift */; };
+		145124CD19CF2544002AC72A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145124CB19CF2544002AC72A /* AVFoundation.framework */; };
+		145124CE19CF2544002AC72A /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145124CC19CF2544002AC72A /* AVKit.framework */; };
+		145124D319CF339A002AC72A /* COPlayQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145124D219CF339A002AC72A /* COPlayQueue.swift */; };
+		145124D719CF389A002AC72A /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 145124D619CF389A002AC72A /* Preferences.xib */; };
+		145124D919CF3974002AC72A /* COPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145124D819CF3974002AC72A /* COPreferencesView.swift */; };
+		145124DF19CF4A1F002AC72A /* COViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145124DE19CF4A1F002AC72A /* COViewController.swift */; };
+		145124E119CF4A34002AC72A /* COMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145124E019CF4A34002AC72A /* COMainViewController.swift */; };
+		1486AD5F19CF6BD600FE77E9 /* COArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1486AD5E19CF6BD600FE77E9 /* COArtist.swift */; };
+		1486AD6119CF6C0A00FE77E9 /* COSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1486AD6019CF6C0A00FE77E9 /* COSong.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1416D0B519CF730D00F68BDE /* NSManagedObjectContext+COAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+COAdditions.swift"; sourceTree = "<group>"; };
+		1416D0B719CF830700F68BDE /* COOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COOperation.swift; sourceTree = "<group>"; };
 		145124A319CF1016002AC72A /* Concerto-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Concerto-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		145124A719CF1016002AC72A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		145124A819CF1016002AC72A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -36,6 +50,16 @@
 		145124B819CF1016002AC72A /* Concerto-SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Concerto-SwiftTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		145124BD19CF1016002AC72A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		145124BE19CF1016002AC72A /* Concerto_SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Concerto_SwiftTests.swift; sourceTree = "<group>"; };
+		145124C819CF10A5002AC72A /* COTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COTableView.swift; sourceTree = "<group>"; };
+		145124CB19CF2544002AC72A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		145124CC19CF2544002AC72A /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		145124D219CF339A002AC72A /* COPlayQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COPlayQueue.swift; sourceTree = "<group>"; };
+		145124D619CF389A002AC72A /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
+		145124D819CF3974002AC72A /* COPreferencesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COPreferencesView.swift; sourceTree = "<group>"; };
+		145124DE19CF4A1F002AC72A /* COViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COViewController.swift; sourceTree = "<group>"; };
+		145124E019CF4A34002AC72A /* COMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COMainViewController.swift; sourceTree = "<group>"; };
+		1486AD5E19CF6BD600FE77E9 /* COArtist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COArtist.swift; sourceTree = "<group>"; };
+		1486AD6019CF6C0A00FE77E9 /* COSong.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COSong.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +67,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				145124CD19CF2544002AC72A /* AVFoundation.framework in Frameworks */,
+				145124CE19CF2544002AC72A /* AVKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +85,7 @@
 		1451249A19CF1016002AC72A = {
 			isa = PBXGroup;
 			children = (
+				145124CF19CF25C3002AC72A /* Frameworks */,
 				145124A519CF1016002AC72A /* Concerto-Swift */,
 				145124BB19CF1016002AC72A /* Concerto-SwiftTests */,
 				145124A419CF1016002AC72A /* Products */,
@@ -77,11 +104,19 @@
 		145124A519CF1016002AC72A /* Concerto-Swift */ = {
 			isa = PBXGroup;
 			children = (
-				145124AA19CF1016002AC72A /* AppDelegate.swift */,
+				145124DA19CF424D002AC72A /* Model */,
+				145124D519CF387F002AC72A /* Views */,
 				145124AF19CF1016002AC72A /* Images.xcassets */,
-				145124B119CF1016002AC72A /* MainMenu.xib */,
 				145124AC19CF1016002AC72A /* Concerto_Swift.xcdatamodeld */,
 				145124A619CF1016002AC72A /* Supporting Files */,
+				145124AA19CF1016002AC72A /* AppDelegate.swift */,
+				145124C819CF10A5002AC72A /* COTableView.swift */,
+				145124D219CF339A002AC72A /* COPlayQueue.swift */,
+				145124D819CF3974002AC72A /* COPreferencesView.swift */,
+				145124DE19CF4A1F002AC72A /* COViewController.swift */,
+				145124E019CF4A34002AC72A /* COMainViewController.swift */,
+				1416D0B519CF730D00F68BDE /* NSManagedObjectContext+COAdditions.swift */,
+				1416D0B719CF830700F68BDE /* COOperation.swift */,
 			);
 			path = "Concerto-Swift";
 			sourceTree = "<group>";
@@ -110,6 +145,33 @@
 				145124BD19CF1016002AC72A /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		145124CF19CF25C3002AC72A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				145124CB19CF2544002AC72A /* AVFoundation.framework */,
+				145124CC19CF2544002AC72A /* AVKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		145124D519CF387F002AC72A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				145124B119CF1016002AC72A /* MainMenu.xib */,
+				145124D619CF389A002AC72A /* Preferences.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		145124DA19CF424D002AC72A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1486AD5E19CF6BD600FE77E9 /* COArtist.swift */,
+				1486AD6019CF6C0A00FE77E9 /* COSong.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,6 +255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				145124B019CF1016002AC72A /* Images.xcassets in Resources */,
+				145124D719CF389A002AC72A /* Preferences.xib in Resources */,
 				145124B319CF1016002AC72A /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -211,8 +274,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1486AD6119CF6C0A00FE77E9 /* COSong.swift in Sources */,
 				145124AB19CF1016002AC72A /* AppDelegate.swift in Sources */,
+				145124DF19CF4A1F002AC72A /* COViewController.swift in Sources */,
+				1416D0B819CF830700F68BDE /* COOperation.swift in Sources */,
+				145124D919CF3974002AC72A /* COPreferencesView.swift in Sources */,
+				1486AD5F19CF6BD600FE77E9 /* COArtist.swift in Sources */,
+				145124C919CF10A5002AC72A /* COTableView.swift in Sources */,
+				145124E119CF4A34002AC72A /* COMainViewController.swift in Sources */,
+				145124D319CF339A002AC72A /* COPlayQueue.swift in Sources */,
 				145124AE19CF1016002AC72A /* Concerto_Swift.xcdatamodeld in Sources */,
+				1416D0B619CF730D00F68BDE /* NSManagedObjectContext+COAdditions.swift in Sources */,
 				145124A919CF1016002AC72A /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -401,6 +473,7 @@
 				145124C419CF1016002AC72A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		145124C519CF1016002AC72A /* Build configuration list for PBXNativeTarget "Concerto-SwiftTests" */ = {
 			isa = XCConfigurationList;
@@ -409,6 +482,7 @@
 				145124C719CF1016002AC72A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
