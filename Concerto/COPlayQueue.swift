@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import Cocoa
 import AVFoundation
 
 @objc protocol COPlayQueueDelegate : class {
-    optional func queueDidStartPlaying()
+    optional func queueDidStartPlaying(song: COSong)
     optional func queueDidChangeSongs(newSong: COSong, lastSong: COSong?)
 }
 
@@ -120,7 +121,7 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
             addPendingItem(next)
         }
         
-        observers.foreach { $0.queueDidStartPlaying!() }
+        observers.foreach { $0.queueDidStartPlaying!(songToPlay) }
     }
     
     func pause() {
@@ -234,5 +235,16 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
                 play(index: currentIndex + 1)
             }
         }
+    }
+}
+
+// NSTableViewDataSource extensions
+extension COPlayQueue : NSTableViewDataSource {
+    func numberOfRowsInTableView(aTableView: NSTableView!) -> Int {
+        return self.songs.count
+    }
+    
+    func tableView(tableView: NSTableView!, objectValueForTableColumn tableColumn: NSTableColumn!, row: Int) -> AnyObject! {
+        return self.songs[row]
     }
 }

@@ -1,15 +1,15 @@
 //
-//  Concerto_SwiftTests.swift
-//  Concerto-SwiftTests
+//  ConcertoTests.swift
+//  ConcertoTests
 //
-//  Created by Christian Benincasa on 9/21/14.
+//  Created by Christian Benincasa on 9/27/14.
 //  Copyright (c) 2014 Christian Benincasa. All rights reserved.
 //
 
 import Cocoa
 import XCTest
 
-class Concerto_SwiftTests: XCTestCase {
+class ConcertoTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

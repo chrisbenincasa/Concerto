@@ -1,5 +1,5 @@
 //
-//  COMainViewController.swift
+//  COPlaylistViewController.swift
 //  Concerto-Swift
 //
 //  Created by Christian Benincasa on 9/21/14.
@@ -9,7 +9,7 @@
 import Foundation
 import Cocoa
 
-class COMainViewController : COViewController, COPlayQueueDelegate {
+class COPlaylistViewController : COViewController, COPlayQueueDelegate {
     
     @IBOutlet weak var pauseButton: NSButton?
     @IBOutlet weak var nextButton: NSButton?
@@ -17,6 +17,7 @@ class COMainViewController : COViewController, COPlayQueueDelegate {
     @IBOutlet weak var currentTime: NSTextField?
     @IBOutlet weak var totalTime: NSTextField?
     @IBOutlet weak var repeatCheckbox: NSButton?
+    @IBOutlet weak var currentlyPlayingTitle: NSTextField?
     
     let playQueue = COPlayQueue.sharedInstance
     
@@ -56,7 +57,8 @@ class COMainViewController : COViewController, COPlayQueueDelegate {
         }
     }
     
-    func queueDidStartPlaying() {
-        Utilities.log("The protocol works!!")
+    func queueDidStartPlaying(song: COSong) {
+//        assert(NSThread.isMainThread())
+        currentlyPlayingTitle?.stringValue = song.name
     }
 }
