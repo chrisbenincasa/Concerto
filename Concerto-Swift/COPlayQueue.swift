@@ -64,14 +64,14 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
     func play(index: Int = 0) {
         // !. No songs to play, bail early
         if songs.count == 0 {
-            println("queue is empty!!")
+            Utilities.log("queue is empty!!")
             return
         }
         
         // If we're already playing the specified index, exit
         // TODO if the order changes, take this check away
         if index == currentIndex && self.playing {
-            println("already playing this song")
+            Utilities.log("already playing this song")
             return
         }
         
@@ -80,7 +80,7 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
         assert(index < songs.count, "Index out of bounds")
         
         // Get the next song to play
-        println("Playing song at \(index)")
+        Utilities.log("Playing song at \(index)")
         let songToPlay = songs[index]
         currentIndex = index
         
@@ -101,7 +101,7 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
         }
         
         if let next = nextSong {
-            println("setting next to \(next.name)")
+            Utilities.log("setting next to \(next.name)")
             addPendingItem(next)
         }
     }
@@ -145,7 +145,7 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
             addPendingItem(songs[nextIndex])
         }
         
-        println("current index =\(currentIndex), swapping players")
+        Utilities.log("current index =\(currentIndex), swapping players")
         let wasPlaying = self.playing
         
         // Swap pending with current
@@ -171,7 +171,7 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
         assert(pendingPlayer != nil)
         
         // Swap the two players
-        println("swapping players -- pending URL: \(pendingPlayer!.url.absoluteString), should play=\(shouldPlay)")
+        Utilities.log("swapping players -- pending URL: \(pendingPlayer!.url.absoluteString), should play=\(shouldPlay)")
         currentPlayer = pendingPlayer
         
         // If we should play, start playing the current (previously pending) player

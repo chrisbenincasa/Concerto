@@ -25,6 +25,8 @@
 		145124E119CF4A34002AC72A /* COMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145124E019CF4A34002AC72A /* COMainViewController.swift */; };
 		1486AD5F19CF6BD600FE77E9 /* COArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1486AD5E19CF6BD600FE77E9 /* COArtist.swift */; };
 		1486AD6119CF6C0A00FE77E9 /* COSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1486AD6019CF6C0A00FE77E9 /* COSong.swift */; };
+		1498CA4419D6EE74003C6D1B /* Array+COExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498CA4319D6EE74003C6D1B /* Array+COExtensions.swift */; };
+		1498CA4619D6EEE2003C6D1B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498CA4519D6EEE2003C6D1B /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,8 @@
 		145124E019CF4A34002AC72A /* COMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COMainViewController.swift; sourceTree = "<group>"; };
 		1486AD5E19CF6BD600FE77E9 /* COArtist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COArtist.swift; sourceTree = "<group>"; };
 		1486AD6019CF6C0A00FE77E9 /* COSong.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COSong.swift; sourceTree = "<group>"; };
+		1498CA4319D6EE74003C6D1B /* Array+COExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+COExtensions.swift"; sourceTree = "<group>"; };
+		1498CA4519D6EEE2003C6D1B /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,8 @@
 				145124E019CF4A34002AC72A /* COMainViewController.swift */,
 				1416D0B519CF730D00F68BDE /* NSManagedObjectContext+COAdditions.swift */,
 				1416D0B719CF830700F68BDE /* COOperation.swift */,
+				1498CA4319D6EE74003C6D1B /* Array+COExtensions.swift */,
+				1498CA4519D6EEE2003C6D1B /* Utilities.swift */,
 			);
 			path = "Concerto-Swift";
 			sourceTree = "<group>";
@@ -276,12 +282,14 @@
 			files = (
 				1486AD6119CF6C0A00FE77E9 /* COSong.swift in Sources */,
 				145124AB19CF1016002AC72A /* AppDelegate.swift in Sources */,
+				1498CA4619D6EEE2003C6D1B /* Utilities.swift in Sources */,
 				145124DF19CF4A1F002AC72A /* COViewController.swift in Sources */,
 				1416D0B819CF830700F68BDE /* COOperation.swift in Sources */,
 				145124D919CF3974002AC72A /* COPreferencesView.swift in Sources */,
 				1486AD5F19CF6BD600FE77E9 /* COArtist.swift in Sources */,
 				145124C919CF10A5002AC72A /* COTableView.swift in Sources */,
 				145124E119CF4A34002AC72A /* COMainViewController.swift in Sources */,
+				1498CA4419D6EE74003C6D1B /* Array+COExtensions.swift in Sources */,
 				145124D319CF339A002AC72A /* COPlayQueue.swift in Sources */,
 				145124AE19CF1016002AC72A /* Concerto_Swift.xcdatamodeld in Sources */,
 				1416D0B619CF730D00F68BDE /* NSManagedObjectContext+COAdditions.swift in Sources */,
