@@ -16,6 +16,3 @@ profile
 DerivedData
 .idea/
 
-# Concerto - temporary
-Concerto/
-ConcertoTests/
