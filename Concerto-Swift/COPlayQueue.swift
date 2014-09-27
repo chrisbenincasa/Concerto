@@ -62,22 +62,29 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
     }
     
     func play(index: Int = 0) {
+        // !. No songs to play, bail early
         if songs.count == 0 {
             println("queue is empty!!")
             return
         }
         
+        // If we're already playing the specified index, exit
+        // TODO if the order changes, take this check away
         if index == currentIndex && self.playing {
+            println("already playing this song")
             return
         }
         
+        // Check basic truths about the requested index
         assert(index >= 0, "Index cannot be less than zero")
         assert(index < songs.count, "Index out of bounds")
         
         // Get the next song to play
+        println("Playing song at \(index)")
         let songToPlay = songs[index]
         currentIndex = index
         
+        // TODO try to be smart and if we're requesting currentIndex + 1, just swap
         currentPlayer = AVAudioPlayer(contentsOfURL: NSURL(string: songToPlay.url), error: nil)
         currentPlayer!.delegate = self
         currentPlayer!.play()
@@ -94,6 +101,7 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
         }
         
         if let next = nextSong {
+            println("setting next to \(next.name)")
             addPendingItem(next)
         }
     }
@@ -112,40 +120,70 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
         }
     }
     
+    func stop() {
+        if self.playing && currentPlayer != nil {
+            currentPlayer!.stop()
+            self.playing = false
+        }
+    }
+    
     func next() {
+        // 1. Hit next, not on repeat mode
         if currentIndex == self.songs.count - 1 && !self.repeat {
-            currentPlayer?.stop()
+            // If currently playing, stop the song
+            self.stop()
+            
+            // Nil out current and pending (nothing should be playing or queued)
+            currentPlayer = nil
+            pendingPlayer = nil
             return
         }
         
-        if let pending = pendingPlayer {
-            if self.playing {
-                pending.play()
-            }
-            currentPlayer = pending
-            currentPlayer!.delegate = self
-            pendingPlayer = nil
-            println("playing song at index \(currentIndex) -- \(pendingPlayer?.url)")
-        } else {
-            // there is no pending player
-//            currentPlayer?.stop()
-            
-        }
-        
-        currentIndex++
-        if currentIndex >= self.songs.count {
-            currentIndex = 0;
-        }
-        
-        let nextIndex = currentIndex + 1
-        
-        println("repeat? = \(self.repeat)")
-        if nextIndex < self.songs.count {
+        // 2. No player is queued, queue one
+        if pendingPlayer == nil {
+            let nextIndex = (currentIndex + 1) % self.songs.count
             addPendingItem(songs[nextIndex])
-        } else if nextIndex >= self.songs.count && self.repeat {
-            println("looped back")
-            addPendingItem(songs.first!)
         }
+        
+        println("current index =\(currentIndex), swapping players")
+        let wasPlaying = self.playing
+        
+        // Swap pending with current
+        self.stop()
+        
+        swapPendingPlayer(wasPlaying)
+        
+        currentIndex = (currentIndex + 1) % self.songs.count
+        
+        // try to set the next player
+        if currentIndex + 1 >= self.songs.count {
+            if self.repeat {
+                addPendingItem(songs.first!)
+            } else {
+                pendingPlayer = nil
+            }
+        } else {
+            addPendingItem(songs[currentIndex + 1])
+        }
+    }
+    
+    private func swapPendingPlayer(shouldPlay: Bool) {
+        assert(pendingPlayer != nil)
+        
+        // Swap the two players
+        println("swapping players -- pending URL: \(pendingPlayer!.url.absoluteString), should play=\(shouldPlay)")
+        currentPlayer = pendingPlayer
+        
+        // If we should play, start playing the current (previously pending) player
+        if shouldPlay {
+            self.resume()
+        }
+        
+        // Set the current player delegate to ourselves
+        currentPlayer!.delegate = self
+        
+        // Nil out the pending player
+        pendingPlayer = nil
     }
     
     func previous() {
@@ -165,6 +203,19 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
     }
     
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
-        println("done!")
+        if pendingPlayer != nil {
+            swapPendingPlayer(true)
+        } else {
+            if currentIndex + 1 >= self.songs.count {
+                if self.repeat {
+                    play(index: 0)
+                } else {
+                    currentPlayer = nil
+                    pendingPlayer = nil
+                }
+            } else {
+                play(index: currentIndex + 1)
+            }
+        }
     }
 }

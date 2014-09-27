@@ -197,7 +197,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 if let tv = tableSource.myTableView {
                     tv.reloadData()
                 }
-                COPlayQueue.sharedInstance.enqueue(songs)
             }
         }
     }
