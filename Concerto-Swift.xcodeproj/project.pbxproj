@@ -113,20 +113,14 @@
 			isa = PBXGroup;
 			children = (
 				145124AA19CF1016002AC72A /* AppDelegate.swift */,
-				1416D0B719CF830700F68BDE /* COOperation.swift */,
-				145124E019CF4A34002AC72A /* COPlaylistViewController.swift */,
-				1498CA5319D74332003C6D1B /* COPlaylistWindowController.swift */,
-				145124D219CF339A002AC72A /* COPlayQueue.swift */,
-				145124D819CF3974002AC72A /* COPreferencesView.swift */,
-				145124C819CF10A5002AC72A /* COTableView.swift */,
-				145124DE19CF4A1F002AC72A /* COViewController.swift */,
-				1498CA5119D74291003C6D1B /* COWindowController.swift */,
-				1498CA4719D6FA03003C6D1B /* Observable.swift */,
-				1498CA4519D6EEE2003C6D1B /* Utilities.swift */,
 				145124AF19CF1016002AC72A /* Images.xcassets */,
+				1490366B19D85F7200FAB2F7 /* Controllers */,
 				1498CA4B19D72ABD003C6D1B /* Extensions */,
 				145124DA19CF424D002AC72A /* Model */,
+				1490366D19D85F8700FAB2F7 /* Playback & Playback Management */,
 				145124A619CF1016002AC72A /* Supporting Files */,
+				1490366C19D85F7D00FAB2F7 /* Utilities */,
+				1490366E19D85F9500FAB2F7 /* Views */,
 				145124D519CF387F002AC72A /* Views */,
 			);
 			path = "Concerto-Swift";
@@ -184,6 +178,44 @@
 				1486AD6019CF6C0A00FE77E9 /* COSong.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		1490366B19D85F7200FAB2F7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				145124E019CF4A34002AC72A /* COPlaylistViewController.swift */,
+				1498CA5319D74332003C6D1B /* COPlaylistWindowController.swift */,
+				145124DE19CF4A1F002AC72A /* COViewController.swift */,
+				1498CA5119D74291003C6D1B /* COWindowController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		1490366C19D85F7D00FAB2F7 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				1416D0B719CF830700F68BDE /* COOperation.swift */,
+				1498CA4719D6FA03003C6D1B /* Observable.swift */,
+				1498CA4519D6EEE2003C6D1B /* Utilities.swift */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		1490366D19D85F8700FAB2F7 /* Playback & Playback Management */ = {
+			isa = PBXGroup;
+			children = (
+				145124D219CF339A002AC72A /* COPlayQueue.swift */,
+			);
+			name = "Playback & Playback Management";
+			sourceTree = "<group>";
+		};
+		1490366E19D85F9500FAB2F7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				145124D819CF3974002AC72A /* COPreferencesView.swift */,
+				145124C819CF10A5002AC72A /* COTableView.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		1498CA4B19D72ABD003C6D1B /* Extensions */ = {
