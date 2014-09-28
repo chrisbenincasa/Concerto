@@ -22,8 +22,11 @@
 		145124DF19CF4A1F002AC72A /* COViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145124DE19CF4A1F002AC72A /* COViewController.swift */; };
 		145124E119CF4A34002AC72A /* COPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145124E019CF4A34002AC72A /* COPlaylistViewController.swift */; };
 		145B0C6919D84D4200BEF9D8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145124CB19CF2544002AC72A /* AVFoundation.framework */; };
-		1486AD5F19CF6BD600FE77E9 /* COArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1486AD5E19CF6BD600FE77E9 /* COArtist.swift */; };
-		1486AD6119CF6C0A00FE77E9 /* COSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1486AD6019CF6C0A00FE77E9 /* COSong.swift */; };
+		1490367A19D8689900FAB2F7 /* COTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1490367919D8689900FAB2F7 /* COTag.swift */; };
+		1490367C19D8689A00FAB2F7 /* COSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1490367B19D8689A00FAB2F7 /* COSong.swift */; };
+		1490367E19D8689A00FAB2F7 /* COArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1490367D19D8689A00FAB2F7 /* COArtist.swift */; };
+		1490368019D8689A00FAB2F7 /* COAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1490367F19D8689A00FAB2F7 /* COAlbum.swift */; };
+		1490368219D8692600FAB2F7 /* COSong+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1490368119D8692600FAB2F7 /* COSong+Extensions.swift */; };
 		1498CA4419D6EE74003C6D1B /* Array+COExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498CA4319D6EE74003C6D1B /* Array+COExtensions.swift */; };
 		1498CA4619D6EEE2003C6D1B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498CA4519D6EEE2003C6D1B /* Utilities.swift */; };
 		1498CA4819D6FA03003C6D1B /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498CA4719D6FA03003C6D1B /* Observable.swift */; };
@@ -62,8 +65,11 @@
 		145124D819CF3974002AC72A /* COPreferencesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COPreferencesView.swift; sourceTree = "<group>"; };
 		145124DE19CF4A1F002AC72A /* COViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COViewController.swift; sourceTree = "<group>"; };
 		145124E019CF4A34002AC72A /* COPlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COPlaylistViewController.swift; sourceTree = "<group>"; };
-		1486AD5E19CF6BD600FE77E9 /* COArtist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COArtist.swift; sourceTree = "<group>"; };
-		1486AD6019CF6C0A00FE77E9 /* COSong.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COSong.swift; sourceTree = "<group>"; };
+		1490367919D8689900FAB2F7 /* COTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COTag.swift; sourceTree = "<group>"; };
+		1490367B19D8689A00FAB2F7 /* COSong.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COSong.swift; sourceTree = "<group>"; };
+		1490367D19D8689A00FAB2F7 /* COArtist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COArtist.swift; sourceTree = "<group>"; };
+		1490367F19D8689A00FAB2F7 /* COAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COAlbum.swift; sourceTree = "<group>"; };
+		1490368119D8692600FAB2F7 /* COSong+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "COSong+Extensions.swift"; sourceTree = "<group>"; };
 		1498CA4319D6EE74003C6D1B /* Array+COExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+COExtensions.swift"; sourceTree = "<group>"; };
 		1498CA4519D6EEE2003C6D1B /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		1498CA4719D6FA03003C6D1B /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
@@ -174,8 +180,11 @@
 			isa = PBXGroup;
 			children = (
 				145124AC19CF1016002AC72A /* Concerto_Swift.xcdatamodeld */,
-				1486AD5E19CF6BD600FE77E9 /* COArtist.swift */,
-				1486AD6019CF6C0A00FE77E9 /* COSong.swift */,
+				1490367F19D8689A00FAB2F7 /* COAlbum.swift */,
+				1490367D19D8689A00FAB2F7 /* COArtist.swift */,
+				1490367B19D8689A00FAB2F7 /* COSong.swift */,
+				1490367919D8689900FAB2F7 /* COTag.swift */,
+				1490368119D8692600FAB2F7 /* COSong+Extensions.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -327,20 +336,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1486AD6119CF6C0A00FE77E9 /* COSong.swift in Sources */,
+				1490367C19D8689A00FAB2F7 /* COSong.swift in Sources */,
 				1498CA4819D6FA03003C6D1B /* Observable.swift in Sources */,
+				1490367E19D8689A00FAB2F7 /* COArtist.swift in Sources */,
 				145124AB19CF1016002AC72A /* AppDelegate.swift in Sources */,
 				1498CA4619D6EEE2003C6D1B /* Utilities.swift in Sources */,
 				145124DF19CF4A1F002AC72A /* COViewController.swift in Sources */,
+				1490367A19D8689900FAB2F7 /* COTag.swift in Sources */,
 				1416D0B819CF830700F68BDE /* COOperation.swift in Sources */,
 				1498CA5219D74291003C6D1B /* COWindowController.swift in Sources */,
 				1498CA5419D74332003C6D1B /* COPlaylistWindowController.swift in Sources */,
+				1490368219D8692600FAB2F7 /* COSong+Extensions.swift in Sources */,
 				145124D919CF3974002AC72A /* COPreferencesView.swift in Sources */,
-				1486AD5F19CF6BD600FE77E9 /* COArtist.swift in Sources */,
 				145124C919CF10A5002AC72A /* COTableView.swift in Sources */,
 				145124E119CF4A34002AC72A /* COPlaylistViewController.swift in Sources */,
 				1498CA4419D6EE74003C6D1B /* Array+COExtensions.swift in Sources */,
 				145124D319CF339A002AC72A /* COPlayQueue.swift in Sources */,
+				1490368019D8689A00FAB2F7 /* COAlbum.swift in Sources */,
 				145124AE19CF1016002AC72A /* Concerto_Swift.xcdatamodeld in Sources */,
 				1416D0B619CF730D00F68BDE /* NSManagedObjectContext+COAdditions.swift in Sources */,
 				145124A919CF1016002AC72A /* main.swift in Sources */,

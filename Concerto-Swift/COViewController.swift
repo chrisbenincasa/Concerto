@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import AppKit
 import Cocoa
 
 class COViewController : NSViewController {
-    
+
 }

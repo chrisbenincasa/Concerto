@@ -7,10 +7,21 @@
 //
 
 import Foundation
+import AppKit
 import Cocoa
 
 class COPlaylistViewController : COViewController, COPlayQueueDelegate {
     
+    // MARK: Data Access
+    var managedObjectContext: NSManagedObjectContext? = nil {
+        didSet {
+            self.arrayController.managedObjectContext = self.managedObjectContext
+        }
+    }
+    
+    @IBOutlet var arrayController: NSArrayController! = nil
+    
+    // MARK: IBOutlets
     @IBOutlet weak var playlistTable: NSTableView?
     @IBOutlet weak var pauseButton: NSButton?
     @IBOutlet weak var nextButton: NSButton?
@@ -19,9 +30,13 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
     @IBOutlet weak var totalTime: NSTextField?
     @IBOutlet weak var repeatCheckbox: NSButton?
     @IBOutlet weak var currentlyPlayingTitle: NSTextField?
+    @IBOutlet weak var songThing: NSTextField?
+    @IBOutlet weak var songThing2: NSTextField?
     
+    // MARK: Misc. objects
     let playQueue = COPlayQueue.sharedInstance
     
+    // MARK: init and deinit
     override init() {
         super.init()
         commonInitTasks()
@@ -30,6 +45,15 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
     override init(coder: NSCoder!) {
         super.init(coder: coder)
         commonInitTasks()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.arrayController.addObserver(self, forKeyPath: "arrangedObjects", options: NSKeyValueObservingOptions.New | NSKeyValueObservingOptions.Old, context: nil)
     }
     
     private func commonInitTasks() {
@@ -66,11 +90,32 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
     }
     
     func queueDidStartPlaying(song: COSong) {
-//        assert(NSThread.isMainThread())
-        currentlyPlayingTitle?.stringValue = song.name
+        currentlyPlayingTitle?.stringValue = song.title
     }
     
     func queueSongsDidChange(notification: NSNotification) {
         playlistTable?.reloadData()
+    }
+    
+    func reloadData() {
+        if let context = self.managedObjectContext {
+            self.arrayController.fetch(nil)
+            playlistTable?.reloadData()
+            println(arrayController.arrangedObjects as [COSong])
+        } else {
+            println("don't have a managed object context...this is really bad")
+        }
+    }
+    
+    override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafeMutablePointer<Void>) {
+        
+        switch keyPath {
+        case "arrangedObjects":
+            let prettyPrintObjects = (self.arrayController.arrangedObjects as [COSong])
+            let titles = prettyPrintObjects.map({ (song: COSong) -> String in return song.title })
+            playQueue.enqueue(self.arrayController.arrangedObjects as [COSong])
+            break
+        default: break
+        }
     }
 }

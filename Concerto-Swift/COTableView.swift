@@ -20,17 +20,17 @@ class COTableView : NSObject, NSTableViewDelegate, NSTableViewDataSource {
     }
     
     func numberOfRowsInTableView(aTableView: NSTableView!) -> Int {
-        return playQueue.songs.count
+        return playQueue.songSet.count
     }
 
     func tableView(tableView: NSTableView!, viewForTableColumn tableColumn: NSTableColumn!, row: Int) -> NSView! {
         let oCell: NSTableCellView? = tableView.makeViewWithIdentifier(tableColumn.identifier, owner: self) as? NSTableCellView
         
         if let cell = oCell {
-            let value: COSong = playQueue.songs[row]
+            let value: COSong = playQueue.songSet.objectAtIndex(row) as COSong
             switch tableColumn.identifier {
                 case "Name":
-                    cell.textField.stringValue = value.name
+                    cell.textField.stringValue = value.title
                     break
                 case "Artist":
                     cell.textField.stringValue = value.artist.name

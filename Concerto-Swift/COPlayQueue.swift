@@ -28,7 +28,7 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
         return Static.instance
     }
     
-    var songs: [COSong]
+    var songSet: NSMutableOrderedSet
     var currentIndex = 0;
     var currentPlayer: AVAudioPlayer?
     var pendingPlayer: AVAudioPlayer?
@@ -37,8 +37,8 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
     var observers: [COPlayQueueDelegate] = []
     
     override init() {
-        self.songs = []
         self.playing = false
+        self.songSet = NSMutableOrderedSet()
     }
     
     func addDelegate(d: COPlayQueueDelegate) {
@@ -52,30 +52,38 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
     
      func insert(item: COSong, index: Int) {
         assert(index >= 0, "Index is less than zero")
-        songs.insert(item, atIndex: index)
-        self.emitNotification(COPlayQueueNotifications.SongsAdded, object: self, userInfo: ["added" : [item]])
+        let previousCount = self.songSet.count
+        songSet.insertObject(item, atIndex: index)
+        if (previousCount != self.songSet.count) {
+            let key = previousCount > self.songSet.count ? "added" : "removed"
+            self.emitNotification(COPlayQueueNotifications.SongsAdded, object: self, userInfo: [key : [item]])
+        }
     }
     
     func insert(items: [COSong], index: Int) {
-        for i in 0...items.count {
-            self.insert(items[i], index: index + i)
+        assert(index >= 0, "Index is less than zero")
+        let previousCount = self.songSet.count
+        println("inserting...")
+        let range = NSRange(Range<Int>(start: index, end: index + items.count))
+        songSet.insertObjects(items, atIndexes: NSIndexSet(indexesInRange: range))
+        if (previousCount != self.songSet.count) {
+            let key = previousCount > self.songSet.count ? "added" : "removed"
+            self.emitNotification(COPlayQueueNotifications.SongsAdded, object: self, userInfo: [key : items])
         }
-        self.emitNotification(COPlayQueueNotifications.SongsAdded, object: self, userInfo: ["added": items])
     }
     
     func enqueue(item: COSong) {
-        self.insert(item, index: songs.count == 0 ? 0 : self.songs.count - 1)
-        self.emitNotification(COPlayQueueNotifications.SongsAdded, object: self, userInfo: ["added": [item]])
+        self.insert(item, index: self.songSet.count == 0 ? 0 : self.songSet.count - 1)
     }
     
     func enqueue(items: [COSong]) {
-        songs.extend(items)
-        self.emitNotification(COPlayQueueNotifications.SongsAdded, object: self, userInfo: ["added": items])
+        let previousCount = self.songSet.count
+        self.insert(items, index: self.songSet.count == 0 ? 0 : self.songSet.count - 1)
     }
     
     // MARK: Audio API
     func playSongAtIndex(index: Int) {
-        if index > songs.count {
+        if index > self.songSet.count {
             return
         }
         
@@ -88,7 +96,7 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
     
     func play(index: Int = 0) {
         // !. No songs to play, bail early
-        if songs.count == 0 {
+        if self.songSet.count == 0 {
             Utilities.log("queue is empty!!")
             return
         }
@@ -102,15 +110,15 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
         
         // Check basic truths about the requested index
         assert(index >= 0, "Index cannot be less than zero")
-        assert(index < songs.count, "Index out of bounds")
+        assert(index < self.songSet.count, "Index out of bounds")
         
         // Get the next song to play
         Utilities.log("Playing song at \(index)")
-        let songToPlay = songs[index]
+        let songToPlay = self.songSet[index] as COSong
         currentIndex = index
         
         // TODO try to be smart and if we're requesting currentIndex + 1, just swap
-        currentPlayer = AVAudioPlayer(contentsOfURL: NSURL(string: songToPlay.url), error: nil)
+        currentPlayer = AVAudioPlayer(contentsOfURL: songToPlay.url()!, error: nil)
         currentPlayer!.delegate = self
         currentPlayer!.play()
         currentIndex = index
@@ -119,14 +127,14 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
         // Optionally, find the song that would play after that one
         var nextSong: COSong?
         
-        if currentIndex + 1 < self.songs.count {
-            nextSong = self.songs[currentIndex + 1]
-        } else if currentIndex + 1 == self.songs.count && self.repeat {
-            nextSong = self.songs.first
+        if currentIndex + 1 < self.songSet.count {
+            nextSong = self.songSet[currentIndex + 1] as? COSong
+        } else if currentIndex + 1 == self.songSet.count && self.repeat {
+            nextSong = self.songSet.firstObject as? COSong
         }
         
         if let next = nextSong {
-            Utilities.log("setting next to \(next.name)")
+            Utilities.log("setting next to \(next.title)")
             addPendingItem(next)
         }
         
@@ -156,7 +164,7 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
     
     func next() {
         // 1. Hit next, not on repeat mode
-        if currentIndex == self.songs.count - 1 && !self.repeat {
+        if currentIndex == self.songSet.count - 1 && !self.repeat {
             // If currently playing, stop the song
             self.stop()
             
@@ -168,8 +176,8 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
         
         // 2. No player is queued, queue one
         if pendingPlayer == nil {
-            let nextIndex = (currentIndex + 1) % self.songs.count
-            addPendingItem(songs[nextIndex])
+            let nextIndex = (currentIndex + 1) % self.songSet.count
+            addPendingItem(self.songSet[nextIndex] as COSong)
         }
         
         Utilities.log("current index =\(currentIndex), swapping players")
@@ -180,17 +188,17 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
         
         swapPendingPlayer(wasPlaying)
         
-        currentIndex = (currentIndex + 1) % self.songs.count
+        currentIndex = (currentIndex + 1) % self.songSet.count
         
         // try to set the next player
-        if currentIndex + 1 >= self.songs.count {
+        if currentIndex + 1 >= self.songSet.count {
             if self.repeat {
-                addPendingItem(songs.first!)
+                addPendingItem(self.songSet.firstObject as COSong)
             } else {
                 pendingPlayer = nil
             }
         } else {
-            addPendingItem(songs[currentIndex + 1])
+            addPendingItem(self.songSet[currentIndex + 1] as COSong)
         }
     }
     
@@ -209,7 +217,7 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
         if pendingPlayer != nil {
             swapPendingPlayer(true)
         } else {
-            if currentIndex + 1 >= self.songs.count {
+            if currentIndex + 1 >= self.songSet.count {
                 if self.repeat {
                     play(index: 0)
                 } else {
@@ -242,7 +250,7 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
     }
     
     private func addPendingItem(item: COSong) {
-        pendingPlayer = AVAudioPlayer(contentsOfURL: NSURL(string: item.url), error: nil)
+        pendingPlayer = AVAudioPlayer(contentsOfURL: item.url()!, error: nil)
         pendingPlayer!.delegate = self
         pendingPlayer!.prepareToPlay()
     }
@@ -258,10 +266,10 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
 // NSTableViewDataSource extensions
 extension COPlayQueue : NSTableViewDataSource {
     func numberOfRowsInTableView(aTableView: NSTableView!) -> Int {
-        return self.songs.count
+        return self.songSet.count
     }
     
     func tableView(tableView: NSTableView!, objectValueForTableColumn tableColumn: NSTableColumn!, row: Int) -> AnyObject! {
-        return self.songs[row]
+        return self.songSet[row]
     }
 }

@@ -16,8 +16,14 @@ struct ConcertoEntity {
 }
 
 extension NSManagedObjectContext {
-    func createEntity<T : NSManagedObject>(entityName: String) -> T {
-        return NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: self) as T
+    func createEntity<T : NSManagedObject>(entityName: String, shouldInsert: Bool = false) -> T {
+        if shouldInsert {
+            println("inserting...")
+            return NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: self) as T
+        } else {
+            let entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: self)
+            return T(entity: entity!, insertIntoManagedObjectContext: nil)
+        }
     }
     
     // TODO change to generic function when Swift compiler can handle it

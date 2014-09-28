@@ -6,17 +6,27 @@
 //  Copyright (c) 2014 Christian Benincasa. All rights reserved.
 //
 
+import Foundation
+import AppKit // Delete when I can
 import Cocoa
 import AVFoundation
 
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    private var hasLaunched: Bool = false
+    
+    // MARK: View Controllers
+    @IBOutlet var playlistViewController: COPlaylistViewController!
+    
     @IBOutlet weak var preferencesWindow: NSWindow?
     var preferencesController: COPreferencesWindowController?
     var mainWindowController: COPlaylistWindowController?
-
-    func applicationDidFinishLaunching(aNotification: NSNotification?) {
-
+    
+    func applicationDidFinishLaunching(aNotification: NSNotification?) {        
+        self.hasLaunched = true
+        
+        playlistViewController.managedObjectContext = self.managedObjectContext
+        playlistViewController.reloadData()
     }
 
     func applicationWillTerminate(aNotification: NSNotification?) {
@@ -83,7 +93,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }()
 
-    lazy var managedObjectContext: NSManagedObjectContext? = {
+    @IBOutlet lazy var managedObjectContext: NSManagedObjectContext? = {
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator
         if coordinator == nil {
@@ -118,46 +128,46 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //        }
 //    }
 
-//    func applicationShouldTerminate(sender: NSApplication!) -> NSApplicationTerminateReply {
-//        // Save changes in the application's managed object context before the application terminates.
-//        
-//        if let moc = managedObjectContext {
-//            if !moc.commitEditing() {
-//                NSLog("\(NSStringFromClass(self.dynamicType)) unable to commit editing to terminate")
-//                return .TerminateCancel
-//            }
-//            
-//            if !moc.hasChanges {
-//                return .TerminateNow
-//            }
-//            
-//            var error: NSError? = nil
-//            if !moc.save(&error) {
-//                // Customize this code block to include application-specific recovery steps.
-//                let result = sender.presentError(error)
-//                if (result) {
-//                    return .TerminateCancel
-//                }
-//                
-//                let question = NSLocalizedString("Could not save changes while quitting. Quit anyway?", comment: "Quit without saves error question message")
-//                let info = NSLocalizedString("Quitting now will lose any changes you have made since the last successful save", comment: "Quit without saves error question info")
-//                let quitButton = NSLocalizedString("Quit anyway", comment: "Quit anyway button title")
-//                let cancelButton = NSLocalizedString("Cancel", comment: "Cancel button title")
-//                let alert = NSAlert()
-//                alert.messageText = question
-//                alert.informativeText = info
-//                alert.addButtonWithTitle(quitButton)
-//                alert.addButtonWithTitle(cancelButton)
-//                
-//                let answer = alert.runModal()
-//                if answer == NSAlertFirstButtonReturn {
-//                    return .TerminateCancel
-//                }
-//            }
-//        }
-//        // If we got here, it is time to quit.
-//        return .TerminateNow
-//    }
+    func applicationShouldTerminate(sender: NSApplication!) -> NSApplicationTerminateReply {
+        // Save changes in the application's managed object context before the application terminates.
+        
+        if let moc = managedObjectContext {
+            if !moc.commitEditing() {
+                NSLog("\(NSStringFromClass(self.dynamicType)) unable to commit editing to terminate")
+                return .TerminateCancel
+            }
+            
+            if !moc.hasChanges {
+                return .TerminateNow
+            }
+            
+            var error: NSError? = nil
+            if !moc.save(&error) {
+                // Customize this code block to include application-specific recovery steps.
+                let result = sender.presentError(error)
+                if (result) {
+                    return .TerminateCancel
+                }
+                
+                let question = NSLocalizedString("Could not save changes while quitting. Quit anyway?", comment: "Quit without saves error question message")
+                let info = NSLocalizedString("Quitting now will lose any changes you have made since the last successful save", comment: "Quit without saves error question info")
+                let quitButton = NSLocalizedString("Quit anyway", comment: "Quit anyway button title")
+                let cancelButton = NSLocalizedString("Cancel", comment: "Cancel button title")
+                let alert = NSAlert()
+                alert.messageText = question
+                alert.informativeText = info
+                alert.addButtonWithTitle(quitButton)
+                alert.addButtonWithTitle(cancelButton)
+                
+                let answer = alert.runModal()
+                if answer == NSAlertFirstButtonReturn {
+                    return .TerminateCancel
+                }
+            }
+        }
+        // If we got here, it is time to quit.
+        return .TerminateNow
+    }
     
     // Preferences Window
     @IBAction func openPreferencesWindow(sender: AnyObject!) {
@@ -165,41 +175,48 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         preferencesController!.showWindow(sender)
     }
     
-    @IBAction func openFile(sender: AnyObject!) {
+    @IBAction func openSongs(sender: AnyObject!) {
         let panel: NSOpenPanel = NSOpenPanel()
         panel.allowsMultipleSelection = true
         panel.canChooseDirectories = false
         if NSFileHandlingPanelOKButton == panel.runModal() {
-            let urls = panel.URLs as [NSURL]
-            let context = self.managedObjectContext
-            let songs = urls.map({ (url: NSURL) -> COSong in
-                let s: COSong = context!.createEntity(ConcertoEntity.Song)
-                let a: COArtist = context!.createEntity(ConcertoEntity.Artist)
-//                let s = COSong()
-//                let a = COArtist()
-                
-                let asset = AVURLAsset(URL: url, options: nil)
-                let titles = AVMetadataItem.metadataItemsFromArray(asset.commonMetadata, withKey: AVMetadataCommonKeyTitle, keySpace: AVMetadataKeySpaceCommon) as [AVMetadataItem]
-                let artists = AVMetadataItem.metadataItemsFromArray(asset.commonMetadata, withKey: AVMetadataCommonKeyArtist, keySpace: AVMetadataKeySpaceCommon) as [AVMetadataItem]
-                
-                s.artist = a
-                
-                if let title = titles.first {
-                    s.name = title.stringValue
-                }
-                if let artist = artists.first {
-                    a.name = artist.stringValue
-                }
-                
-                s.url = url.absoluteString!
-                return s
-            })
-            
-            COPlayQueue.sharedInstance.enqueue(songs)
+            let paths = (panel.URLs as [NSURL]).map { $0.path! } as [String]
+            self.application(NSApp as NSApplication, openFiles: paths)
         }
     }
     
-    // Implement Open With...
+    // MARK: NSApplicationDelegate
     
+    func application(sender: NSApplication!, openFile filename: String!) -> Bool {
+        self.application(NSApp as NSApplication, openFiles: [filename])
+        return true
+    }
+    
+    func application(sender: NSApplication!, openFiles filenames: [AnyObject]!) {
+        let context = self.managedObjectContext
+        let songs = (filenames as [String]).map({ (path: String) -> COSong in
+            let url = NSURL(fileURLWithPath: path)
+            let s: COSong = context!.createEntity(ConcertoEntity.Song, shouldInsert: true)
+            let a: COArtist = context!.createEntity(ConcertoEntity.Artist, shouldInsert: true)
+            
+            let asset = AVURLAsset(URL: url, options: nil)
+            let titles = AVMetadataItem.metadataItemsFromArray(asset.commonMetadata, withKey: AVMetadataCommonKeyTitle, keySpace: AVMetadataKeySpaceCommon) as [AVMetadataItem]
+            let artists = AVMetadataItem.metadataItemsFromArray(asset.commonMetadata, withKey: AVMetadataCommonKeyArtist, keySpace: AVMetadataKeySpaceCommon) as [AVMetadataItem]
+            
+            s.artist = a
+            
+            if let title = titles.first {
+                s.title = title.stringValue
+            }
+            if let artist = artists.first {
+                a.name = artist.stringValue
+            }
+            
+            s.setBookmarkFromPath(path)
+            return s
+        })
+        
+        COPlayQueue.sharedInstance.enqueue(songs)
+    }
 }
 
