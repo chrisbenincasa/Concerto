@@ -15,6 +15,10 @@ import AVFoundation
     optional func queueDidChangeSongs(newSong: COSong, lastSong: COSong?)
 }
 
+struct COPlayQueueNotifications {
+    static let SongsAdded = "SongsAdded"
+}
+
 class COPlayQueue : NSObject, AVAudioPlayerDelegate {
     class var sharedInstance : COPlayQueue {
         struct Static {
@@ -46,6 +50,30 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
         observers = removeObjectIdenticalTo(d, fromArray: observers)
     }
     
+     func insert(item: COSong, index: Int) {
+        assert(index >= 0, "Index is less than zero")
+        songs.insert(item, atIndex: index)
+        self.emitNotification(COPlayQueueNotifications.SongsAdded, object: self, userInfo: ["added" : [item]])
+    }
+    
+    func insert(items: [COSong], index: Int) {
+        for i in 0...items.count {
+            self.insert(items[i], index: index + i)
+        }
+        self.emitNotification(COPlayQueueNotifications.SongsAdded, object: self, userInfo: ["added": items])
+    }
+    
+    func enqueue(item: COSong) {
+        self.insert(item, index: songs.count == 0 ? 0 : self.songs.count - 1)
+        self.emitNotification(COPlayQueueNotifications.SongsAdded, object: self, userInfo: ["added": [item]])
+    }
+    
+    func enqueue(items: [COSong]) {
+        songs.extend(items)
+        self.emitNotification(COPlayQueueNotifications.SongsAdded, object: self, userInfo: ["added": items])
+    }
+    
+    // MARK: Audio API
     func playSongAtIndex(index: Int) {
         if index > songs.count {
             return
@@ -56,25 +84,6 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
         }
         
         self.play(index: index)
-    }
-    
-    func insert(item: COSong, index: Int) {
-        assert(index >= 0, "Index is less than zero")
-        songs.insert(item, atIndex: index)
-    }
-    
-    func insert(items: [COSong], index: Int) {
-        for i in 0...items.count {
-            self.insert(items[i], index: index + i)
-        }
-    }
-    
-    func enqueue(item: COSong) {
-        self.insert(item, index: songs.count == 0 ? 0 : self.songs.count - 1)
-    }
-    
-    func enqueue(items: [COSong]) {
-        songs.extend(items)
     }
     
     func play(index: Int = 0) {
@@ -185,6 +194,34 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
         }
     }
     
+    func previous() {
+        if self.playing {
+            if currentPlayer!.currentTime < 10.0 {
+                play(index: currentIndex - 1)
+            } else {
+                currentPlayer!.currentTime = 0.0
+            }
+        }
+    }
+    
+    // MARK: AVAudioPlayerDelegate
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+        if pendingPlayer != nil {
+            swapPendingPlayer(true)
+        } else {
+            if currentIndex + 1 >= self.songs.count {
+                if self.repeat {
+                    play(index: 0)
+                } else {
+                    currentPlayer = nil
+                    pendingPlayer = nil
+                }
+            } else {
+                play(index: currentIndex + 1)
+            }
+        }
+    }
+    
     private func swapPendingPlayer(shouldPlay: Bool) {
         assert(pendingPlayer != nil)
         
@@ -204,37 +241,17 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
         pendingPlayer = nil
     }
     
-    func previous() {
-        if self.playing {
-            if currentPlayer!.currentTime < 10.0 {
-                play(index: currentIndex - 1)
-            } else {
-                currentPlayer!.currentTime = 0.0
-            }
-        }
-    }
-    
     private func addPendingItem(item: COSong) {
         pendingPlayer = AVAudioPlayer(contentsOfURL: NSURL(string: item.url), error: nil)
         pendingPlayer!.delegate = self
         pendingPlayer!.prepareToPlay()
     }
     
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
-        if pendingPlayer != nil {
-            swapPendingPlayer(true)
-        } else {
-            if currentIndex + 1 >= self.songs.count {
-                if self.repeat {
-                    play(index: 0)
-                } else {
-                    currentPlayer = nil
-                    pendingPlayer = nil
-                }
-            } else {
-                play(index: currentIndex + 1)
-            }
-        }
+    private func emitNotification(name: String, object: AnyObject?, userInfo: [NSObject : AnyObject]? = nil) {
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        let notification = NSNotification(name: name, object: object, userInfo: userInfo)
+        println("Emiiting notification")
+        notificationCenter.postNotification(notification)
     }
 }
 

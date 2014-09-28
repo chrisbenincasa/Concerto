@@ -11,6 +11,7 @@ import Cocoa
 
 class COPlaylistViewController : COViewController, COPlayQueueDelegate {
     
+    @IBOutlet weak var playlistTable: NSTableView?
     @IBOutlet weak var pauseButton: NSButton?
     @IBOutlet weak var nextButton: NSButton?
     @IBOutlet weak var prevButton: NSButton?
@@ -23,12 +24,19 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
     
     override init() {
         super.init()
-        playQueue.addDelegate(self)
+        commonInitTasks()
     }
     
     override init(coder: NSCoder!) {
         super.init(coder: coder)
+        commonInitTasks()
+    }
+    
+    private func commonInitTasks() {
         playQueue.addDelegate(self)
+        
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: "queueSongsDidChange:", name: nil, object: playQueue)
     }
     
     @IBAction func togglePlay(sender: AnyObject) {
@@ -60,5 +68,9 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
     func queueDidStartPlaying(song: COSong) {
 //        assert(NSThread.isMainThread())
         currentlyPlayingTitle?.stringValue = song.name
+    }
+    
+    func queueSongsDidChange(notification: NSNotification) {
+        playlistTable?.reloadData()
     }
 }

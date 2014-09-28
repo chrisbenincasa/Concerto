@@ -6,20 +6,17 @@
 //  Copyright (c) 2014 Christian Benincasa. All rights reserved.
 //
 
-
 import Cocoa
 import AVFoundation
 
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    
-    @IBOutlet weak var preferencesWindow: NSWindow!
+    @IBOutlet weak var preferencesWindow: NSWindow?
     var preferencesController: COPreferencesWindowController?
     var mainWindowController: COPlaylistWindowController?
 
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
-//        mainWindowController = COPlaylistWindowController(windowNibName: "PlaylistWindow")
-//        mainWindowController!.showWindow(self)
+
     }
 
     func applicationWillTerminate(aNotification: NSNotification?) {
@@ -99,73 +96,107 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Core Data Saving and Undo support
 
-    @IBAction func saveAction(sender: AnyObject!) {
-        // Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
-        if let moc = self.managedObjectContext {
-            if !moc.commitEditing() {
-                NSLog("\(NSStringFromClass(self.dynamicType)) unable to commit editing before saving")
-            }
-            var error: NSError? = nil
-            if moc.hasChanges && !moc.save(&error) {
-                NSApplication.sharedApplication().presentError(error)
-            }
-        }
-    }
+//    @IBAction func saveAction(sender: AnyObject!) {
+//        // Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
+//        if let moc = self.managedObjectContext {
+//            if !moc.commitEditing() {
+//                NSLog("\(NSStringFromClass(self.dynamicType)) unable to commit editing before saving")
+//            }
+//            var error: NSError? = nil
+//            if moc.hasChanges && !moc.save(&error) {
+//                NSApplication.sharedApplication().presentError(error)
+//            }
+//        }
+//    }
 
-    func windowWillReturnUndoManager(window: NSWindow!) -> NSUndoManager! {
-        // Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
-        if let moc = self.managedObjectContext {
-            return moc.undoManager
-        } else {
-            return nil
-        }
-    }
+//    func windowWillReturnUndoManager(window: NSWindow!) -> NSUndoManager! {
+//        // Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
+//        if let moc = self.managedObjectContext {
+//            return moc.undoManager
+//        } else {
+//            return nil
+//        }
+//    }
 
-    func applicationShouldTerminate(sender: NSApplication!) -> NSApplicationTerminateReply {
-        // Save changes in the application's managed object context before the application terminates.
-        
-        if let moc = managedObjectContext {
-            if !moc.commitEditing() {
-                NSLog("\(NSStringFromClass(self.dynamicType)) unable to commit editing to terminate")
-                return .TerminateCancel
-            }
-            
-            if !moc.hasChanges {
-                return .TerminateNow
-            }
-            
-            var error: NSError? = nil
-            if !moc.save(&error) {
-                // Customize this code block to include application-specific recovery steps.
-                let result = sender.presentError(error)
-                if (result) {
-                    return .TerminateCancel
-                }
-                
-                let question = NSLocalizedString("Could not save changes while quitting. Quit anyway?", comment: "Quit without saves error question message")
-                let info = NSLocalizedString("Quitting now will lose any changes you have made since the last successful save", comment: "Quit without saves error question info");
-                let quitButton = NSLocalizedString("Quit anyway", comment: "Quit anyway button title")
-                let cancelButton = NSLocalizedString("Cancel", comment: "Cancel button title")
-                let alert = NSAlert()
-                alert.messageText = question
-                alert.informativeText = info
-                alert.addButtonWithTitle(quitButton)
-                alert.addButtonWithTitle(cancelButton)
-                
-                let answer = alert.runModal()
-                if answer == NSAlertFirstButtonReturn {
-                    return .TerminateCancel
-                }
-            }
-        }
-        // If we got here, it is time to quit.
-        return .TerminateNow
-    }
+//    func applicationShouldTerminate(sender: NSApplication!) -> NSApplicationTerminateReply {
+//        // Save changes in the application's managed object context before the application terminates.
+//        
+//        if let moc = managedObjectContext {
+//            if !moc.commitEditing() {
+//                NSLog("\(NSStringFromClass(self.dynamicType)) unable to commit editing to terminate")
+//                return .TerminateCancel
+//            }
+//            
+//            if !moc.hasChanges {
+//                return .TerminateNow
+//            }
+//            
+//            var error: NSError? = nil
+//            if !moc.save(&error) {
+//                // Customize this code block to include application-specific recovery steps.
+//                let result = sender.presentError(error)
+//                if (result) {
+//                    return .TerminateCancel
+//                }
+//                
+//                let question = NSLocalizedString("Could not save changes while quitting. Quit anyway?", comment: "Quit without saves error question message")
+//                let info = NSLocalizedString("Quitting now will lose any changes you have made since the last successful save", comment: "Quit without saves error question info")
+//                let quitButton = NSLocalizedString("Quit anyway", comment: "Quit anyway button title")
+//                let cancelButton = NSLocalizedString("Cancel", comment: "Cancel button title")
+//                let alert = NSAlert()
+//                alert.messageText = question
+//                alert.informativeText = info
+//                alert.addButtonWithTitle(quitButton)
+//                alert.addButtonWithTitle(cancelButton)
+//                
+//                let answer = alert.runModal()
+//                if answer == NSAlertFirstButtonReturn {
+//                    return .TerminateCancel
+//                }
+//            }
+//        }
+//        // If we got here, it is time to quit.
+//        return .TerminateNow
+//    }
     
     // Preferences Window
     @IBAction func openPreferencesWindow(sender: AnyObject!) {
         preferencesController = COPreferencesWindowController(windowNibName: "Preferences")
         preferencesController!.showWindow(sender)
+    }
+    
+    @IBAction func openFile(sender: AnyObject!) {
+        let panel: NSOpenPanel = NSOpenPanel()
+        panel.allowsMultipleSelection = true
+        panel.canChooseDirectories = false
+        if NSFileHandlingPanelOKButton == panel.runModal() {
+            let urls = panel.URLs as [NSURL]
+            let context = self.managedObjectContext
+            let songs = urls.map({ (url: NSURL) -> COSong in
+                let s: COSong = context!.createEntity(ConcertoEntity.Song)
+                let a: COArtist = context!.createEntity(ConcertoEntity.Artist)
+//                let s = COSong()
+//                let a = COArtist()
+                
+                let asset = AVURLAsset(URL: url, options: nil)
+                let titles = AVMetadataItem.metadataItemsFromArray(asset.commonMetadata, withKey: AVMetadataCommonKeyTitle, keySpace: AVMetadataKeySpaceCommon) as [AVMetadataItem]
+                let artists = AVMetadataItem.metadataItemsFromArray(asset.commonMetadata, withKey: AVMetadataCommonKeyArtist, keySpace: AVMetadataKeySpaceCommon) as [AVMetadataItem]
+                
+                s.artist = a
+                
+                if let title = titles.first {
+                    s.name = title.stringValue
+                }
+                if let artist = artists.first {
+                    a.name = artist.stringValue
+                }
+                
+                s.url = url.absoluteString!
+                return s
+            })
+            
+            COPlayQueue.sharedInstance.enqueue(songs)
+        }
     }
     
     // Implement Open With...
