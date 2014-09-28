@@ -1,19 +1,25 @@
 //
 //  AppDelegate.swift
-//  Concerto
+//  Concerto-Swift
 //
-//  Created by Christian Benincasa on 9/27/14.
+//  Created by Christian Benincasa on 9/21/14.
 //  Copyright (c) 2014 Christian Benincasa. All rights reserved.
 //
 
+
 import Cocoa
+import AVFoundation
 
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-
+    
+    @IBOutlet weak var preferencesWindow: NSWindow!
+    var preferencesController: COPreferencesWindowController?
+    var mainWindowController: COPlaylistWindowController?
 
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
-        // Insert code here to initialize your application
+//        mainWindowController = COPlaylistWindowController(windowNibName: "PlaylistWindow")
+//        mainWindowController!.showWindow(self)
     }
 
     func applicationWillTerminate(aNotification: NSNotification?) {
@@ -23,15 +29,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Core Data stack
 
     lazy var applicationDocumentsDirectory: NSURL = {
-        // The directory the application uses to store the Core Data store file. This code uses a directory named "com.chrisbenincasa.Concerto" in the user's Application Support directory.
+        // The directory the application uses to store the Core Data store file. This code uses a directory named "com.chrisbenincasa.Concerto_Swift" in the user's Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)
         let appSupportURL = urls[urls.count - 1] as NSURL
-        return appSupportURL.URLByAppendingPathComponent("com.chrisbenincasa.Concerto")
+        return appSupportURL.URLByAppendingPathComponent("com.chrisbenincasa.Concerto_Swift")
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = NSBundle.mainBundle().URLForResource("Concerto", withExtension: "momd")!
+        let modelURL = NSBundle.mainBundle().URLForResource("Concerto_Swift", withExtension: "momd")!
         return NSManagedObjectModel(contentsOfURL: modelURL)
     }()
 
@@ -58,7 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         var coordinator: NSPersistentStoreCoordinator?
         if !shouldFail && (error == nil) {
             coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-            let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Concerto.storedata")
+            let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Concerto_Swift.storedata")
             if coordinator!.addPersistentStoreWithType(NSXMLStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
                 coordinator = nil
             }
@@ -155,6 +161,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // If we got here, it is time to quit.
         return .TerminateNow
     }
-
+    
+    // Preferences Window
+    @IBAction func openPreferencesWindow(sender: AnyObject!) {
+        preferencesController = COPreferencesWindowController(windowNibName: "Preferences")
+        preferencesController!.showWindow(sender)
+    }
+    
+    // Implement Open With...
+    
 }
 
