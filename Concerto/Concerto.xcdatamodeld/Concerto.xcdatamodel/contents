@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6247" systemVersion="14A361c" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6251" systemVersion="14A361c" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Album" representedClassName="Concerto.COAlbum" syncable="YES">
         <attribute name="lastModified" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
@@ -14,7 +14,21 @@
         <attribute name="startYear" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="songs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Song" inverseName="artist" inverseEntity="Song" syncable="YES"/>
     </entity>
+    <entity name="Playlist" representedClassName="COPlaylist" isAbstract="YES" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="songs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Song" inverseName="playlists" inverseEntity="Song" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" syncable="YES"/>
+    </entity>
+    <entity name="RegularPlaylist" representedClassName="CORegularPlaylist" parentEntity="Playlist" syncable="YES"/>
+    <entity name="SmartPlaylist" syncable="YES">
+        <relationship name="contraints" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SmartPlaylistConstraint" inverseName="playlist" inverseEntity="SmartPlaylistConstraint" syncable="YES"/>
+    </entity>
+    <entity name="SmartPlaylistConstraint" representedClassName="COSmartPlaylistContraint" syncable="YES">
+        <attribute name="constraint" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="playlist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SmartPlaylist" inverseName="contraints" inverseEntity="SmartPlaylist" syncable="YES"/>
+    </entity>
     <entity name="Song" representedClassName="Concerto.COSong" syncable="YES">
+        <attribute name="bitRate" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="bookmark" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="bpm" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="comment" optional="YES" attributeType="String" syncable="YES"/>
@@ -22,11 +36,13 @@
         <attribute name="dateAdded" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="fileType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="playCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="trackNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="year" optional="YES" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
         <relationship name="album" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Album" inverseName="songs" inverseEntity="Album" syncable="YES"/>
         <relationship name="artist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Artist" inverseName="songs" inverseEntity="Artist" syncable="YES"/>
+        <relationship name="playlists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Playlist" inverseName="songs" inverseEntity="Playlist" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="songs" inverseEntity="Tag" syncable="YES"/>
     </entity>
     <entity name="Tag" representedClassName="Concerto.COTag" syncable="YES">
@@ -35,9 +51,13 @@
         <relationship name="songs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Song" inverseName="tags" inverseEntity="Song" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Song" positionX="-63" positionY="-18" width="128" height="238"/>
-        <element name="Artist" positionX="-54" positionY="-9" width="128" height="118"/>
         <element name="Album" positionX="-36" positionY="9" width="128" height="118"/>
+        <element name="Artist" positionX="-54" positionY="-9" width="128" height="118"/>
+        <element name="Playlist" positionX="-45" positionY="90" width="128" height="90"/>
+        <element name="RegularPlaylist" positionX="-36" positionY="108" width="128" height="45"/>
+        <element name="SmartPlaylist" positionX="-27" positionY="117" width="128" height="58"/>
+        <element name="SmartPlaylistConstraint" positionX="-18" positionY="126" width="128" height="73"/>
+        <element name="Song" positionX="-63" positionY="-18" width="128" height="283"/>
         <element name="Tag" positionX="-18" positionY="27" width="128" height="88"/>
     </elements>
 </model>

@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Christian Benincasa. All rights reserved.
 //
 
-import Foundation
-import AppKit
 import Cocoa
 
 class COViewController : NSViewController {

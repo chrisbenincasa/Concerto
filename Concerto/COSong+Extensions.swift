@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Christian Benincasa. All rights reserved.
 //
 
-import Foundation
 import Cocoa
 
 extension COSong {
@@ -34,7 +33,7 @@ extension COSong {
     func url() -> NSURL? {
         if self.bookmark.length > 0 {
             var error: NSError?
-            let url = NSURL.URLByResolvingBookmarkData(self.bookmark, options: .WithoutUI, relativeToURL: nil, bookmarkDataIsStale: nil, error: &error)
+            let url = NSURL(byResolvingBookmarkData: self.bookmark, options: .WithoutUI, relativeToURL: nil, bookmarkDataIsStale: nil, error: &error)
             
             if let returnedErr = error {
                 println("error while attempting to resolve bookmark from song: \(returnedErr), \(returnedErr.userInfo)")

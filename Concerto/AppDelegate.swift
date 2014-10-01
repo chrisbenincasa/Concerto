@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Christian Benincasa. All rights reserved.
 //
 
-import Foundation
-import AppKit // Delete when I can
 import Cocoa
 import AVFoundation
 
@@ -45,8 +43,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
         let modelURL = NSBundle.mainBundle().URLForResource("Concerto", withExtension: "momd")!
-        println(modelURL)
-        return NSManagedObjectModel(contentsOfURL: modelURL)
+        return NSManagedObjectModel(contentsOfURL: modelURL)!
     }()
 
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
@@ -87,7 +84,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 dict[NSUnderlyingErrorKey] = error
             }
             error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
-            NSApplication.sharedApplication().presentError(error)
+            NSApplication.sharedApplication().presentError(error!)
             return nil
         } else {
             return coordinator
@@ -145,7 +142,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             var error: NSError? = nil
             if !moc.save(&error) {
                 // Customize this code block to include application-specific recovery steps.
-                let result = sender.presentError(error)
+                let result = sender.presentError(error!)
                 if (result) {
                     return .TerminateCancel
                 }

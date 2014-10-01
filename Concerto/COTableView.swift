@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Christian Benincasa. All rights reserved.
 //
 
-import Foundation
 import Cocoa
 import AVFoundation
 
@@ -30,10 +29,10 @@ class COTableView : NSObject, NSTableViewDelegate, NSTableViewDataSource {
             let value: COSong = playQueue.songSet.objectAtIndex(row) as COSong
             switch tableColumn.identifier {
                 case "Name":
-                    cell.textField.stringValue = value.title
+                    cell.textField!.stringValue = value.title
                     break
                 case "Artist":
-                    cell.textField.stringValue = value.artist.name
+                    cell.textField!.stringValue = value.artist.name
                     break
                 default: break
             }

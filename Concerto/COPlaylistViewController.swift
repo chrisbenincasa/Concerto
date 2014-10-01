@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Christian Benincasa. All rights reserved.
 //
 
-import Foundation
-import AppKit
 import Cocoa
 
 class COPlaylistViewController : COViewController, COPlayQueueDelegate {
@@ -47,7 +45,7 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
         commonInitTasks()
     }
     
-    override init(coder: NSCoder!) {
+    override init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInitTasks()
     }
@@ -111,7 +109,7 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
         }
     }
     
-    override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafeMutablePointer<Void>) {
+    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         
         switch keyPath {
         case "arrangedObjects":

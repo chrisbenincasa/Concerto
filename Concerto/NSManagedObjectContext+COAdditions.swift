@@ -6,9 +6,7 @@
 //  Copyright (c) 2014 Christian Benincasa. All rights reserved.
 //
 
-import Foundation
 import Cocoa
-import CoreData
 
 struct ConcertoEntity {
     static let Song = "Song"
