@@ -1,5 +1,5 @@
 //
-//  COTableView.swift
+//  COTableRowView.swift
 //  Concerto
 //
 //  Created by Christian Benincasa on 10/4/14.
@@ -8,9 +8,14 @@
 
 import Cocoa
 
-class COTableView: NSTableView {
+class COTableRowView: NSTableRowView {
 
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)
+    }
+    
+    override func drawSelectionInRect(dirtyRect: NSRect) {
+        NSColor.blueColor().setFill()
+        NSRectFill(dirtyRect)
     }
 }

@@ -70,7 +70,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if !shouldFail && (error == nil) {
             coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
             let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Concerto.storedata")
-            if coordinator!.addPersistentStoreWithType(NSXMLStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
+            
+            // Custom options
+            let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
+            
+            if coordinator!.addPersistentStoreWithType(NSXMLStoreType, configuration: nil, URL: url, options: options as NSDictionary, error: &error) == nil {
                 coordinator = nil
             }
         }
