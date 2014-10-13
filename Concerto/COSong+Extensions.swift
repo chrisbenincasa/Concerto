@@ -7,8 +7,9 @@
 //
 
 import Cocoa
+import AVFoundation
 
-extension COSong {
+extension COSong {    
     func setBookmarkFromPath(path: String) -> Bool {
         var error: NSError?
         let url = NSURL.fileURLWithPath(path, isDirectory: false)

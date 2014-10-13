@@ -8,11 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		141557D519DC31980076F87E /* COWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141557D419DC31980076F87E /* COWindow.swift */; };
+		1416981A19EC2F4C0020BF14 /* Optional+COExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1416981919EC2F4C0020BF14 /* Optional+COExtensions.swift */; };
+		1416981F19EC36260020BF14 /* COSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1416981E19EC36260020BF14 /* COSong.swift */; };
 		1436F14019E086CC0000A24E /* COTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1436F13F19E086CC0000A24E /* COTableView.swift */; };
 		1436F14219E098390000A24E /* COTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1436F14119E098390000A24E /* COTableRowView.swift */; };
 		1436F14419E099940000A24E /* COTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1436F14319E099940000A24E /* COTableCellView.swift */; };
 		147AEC8419DB78680070818F /* MetadataEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 147AEC8319DB78680070818F /* MetadataEditor.xib */; };
 		148B02BE19DA6133000FC8F6 /* Concerto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 148B02BC19DA6133000FC8F6 /* Concerto.xcdatamodeld */; };
+		149716D719EB77CC00A7AD25 /* COArtist+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149716D619EB77CC00A7AD25 /* COArtist+Additions.swift */; };
+		149716E019EB8EB800A7AD25 /* COMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149716DF19EB8EB800A7AD25 /* COMetadata.swift */; };
 		14CFC10419DA5D8900EC6D53 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC10319DA5D8900EC6D53 /* main.swift */; };
 		14CFC10B19DA5D8900EC6D53 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14CFC10A19DA5D8900EC6D53 /* Images.xcassets */; };
 		14CFC11A19DA5D8900EC6D53 /* ConcertoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC11919DA5D8900EC6D53 /* ConcertoTests.swift */; };
@@ -23,8 +27,7 @@
 		14CFC12F19DA5DA800EC6D53 /* COPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC12719DA5DA800EC6D53 /* COPlaylistViewController.swift */; };
 		14CFC13019DA5DA800EC6D53 /* COPlaylistWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC12819DA5DA800EC6D53 /* COPlaylistWindowController.swift */; };
 		14CFC13119DA5DA800EC6D53 /* COPlayQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC12919DA5DA800EC6D53 /* COPlayQueue.swift */; };
-		14CFC13219DA5DA800EC6D53 /* COPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC12A19DA5DA800EC6D53 /* COPreferencesView.swift */; };
-		14CFC13919DA5DAF00EC6D53 /* COSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC13319DA5DAF00EC6D53 /* COSong.swift */; };
+		14CFC13219DA5DA800EC6D53 /* COPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC12A19DA5DA800EC6D53 /* COPreferencesViewController.swift */; };
 		14CFC13A19DA5DAF00EC6D53 /* COSong+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC13419DA5DAF00EC6D53 /* COSong+Extensions.swift */; };
 		14CFC13B19DA5DAF00EC6D53 /* COTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC13519DA5DAF00EC6D53 /* COTableViewDelegate.swift */; };
 		14CFC13C19DA5DAF00EC6D53 /* COTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC13619DA5DAF00EC6D53 /* COTag.swift */; };
@@ -36,6 +39,7 @@
 		14CFC14919DA5DB800EC6D53 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14CFC14419DA5DB800EC6D53 /* Preferences.xib */; };
 		14CFC14B19DA5DD900EC6D53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC14A19DA5DD900EC6D53 /* AppDelegate.swift */; };
 		14CFC14D19DA5E1800EC6D53 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14CFC14C19DA5E1800EC6D53 /* MainMenu.xib */; };
+		14ED0D8519E2C9DE0030A828 /* COMetadataEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ED0D8419E2C9DE0030A828 /* COMetadataEditorViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,11 +54,15 @@
 
 /* Begin PBXFileReference section */
 		141557D419DC31980076F87E /* COWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COWindow.swift; sourceTree = "<group>"; };
+		1416981919EC2F4C0020BF14 /* Optional+COExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optional+COExtensions.swift"; sourceTree = "<group>"; };
+		1416981E19EC36260020BF14 /* COSong.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COSong.swift; sourceTree = "<group>"; };
 		1436F13F19E086CC0000A24E /* COTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COTableView.swift; sourceTree = "<group>"; };
 		1436F14119E098390000A24E /* COTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COTableRowView.swift; sourceTree = "<group>"; };
 		1436F14319E099940000A24E /* COTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COTableCellView.swift; sourceTree = "<group>"; };
 		147AEC8319DB78680070818F /* MetadataEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MetadataEditor.xib; sourceTree = "<group>"; };
 		148B02BD19DA6133000FC8F6 /* Concerto.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Concerto.xcdatamodel; sourceTree = "<group>"; };
+		149716D619EB77CC00A7AD25 /* COArtist+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "COArtist+Additions.swift"; sourceTree = "<group>"; };
+		149716DF19EB8EB800A7AD25 /* COMetadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COMetadata.swift; sourceTree = "<group>"; };
 		14CFC0FE19DA5D8900EC6D53 /* Concerto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Concerto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14CFC10219DA5D8900EC6D53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14CFC10319DA5D8900EC6D53 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -69,8 +77,7 @@
 		14CFC12719DA5DA800EC6D53 /* COPlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COPlaylistViewController.swift; sourceTree = "<group>"; };
 		14CFC12819DA5DA800EC6D53 /* COPlaylistWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COPlaylistWindowController.swift; sourceTree = "<group>"; };
 		14CFC12919DA5DA800EC6D53 /* COPlayQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COPlayQueue.swift; sourceTree = "<group>"; };
-		14CFC12A19DA5DA800EC6D53 /* COPreferencesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COPreferencesView.swift; sourceTree = "<group>"; };
-		14CFC13319DA5DAF00EC6D53 /* COSong.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COSong.swift; sourceTree = "<group>"; };
+		14CFC12A19DA5DA800EC6D53 /* COPreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COPreferencesViewController.swift; sourceTree = "<group>"; };
 		14CFC13419DA5DAF00EC6D53 /* COSong+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "COSong+Extensions.swift"; sourceTree = "<group>"; };
 		14CFC13519DA5DAF00EC6D53 /* COTableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COTableViewDelegate.swift; sourceTree = "<group>"; };
 		14CFC13619DA5DAF00EC6D53 /* COTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COTag.swift; sourceTree = "<group>"; };
@@ -82,6 +89,7 @@
 		14CFC14419DA5DB800EC6D53 /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		14CFC14A19DA5DD900EC6D53 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14CFC14C19DA5E1800EC6D53 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		14ED0D8419E2C9DE0030A828 /* COMetadataEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COMetadataEditorViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +136,7 @@
 			children = (
 				14CFC13419DA5DAF00EC6D53 /* COSong+Extensions.swift */,
 				14CFC13F19DA5DB800EC6D53 /* NSManagedObjectContext+COAdditions.swift */,
+				149716D619EB77CC00A7AD25 /* COArtist+Additions.swift */,
 			);
 			name = Additions;
 			sourceTree = "<group>";
@@ -137,10 +146,18 @@
 			children = (
 				14CFC12419DA5DA800EC6D53 /* COAlbum.swift */,
 				14CFC12519DA5DA800EC6D53 /* COArtist.swift */,
-				14CFC13319DA5DAF00EC6D53 /* COSong.swift */,
 				14CFC13619DA5DAF00EC6D53 /* COTag.swift */,
+				1416981E19EC36260020BF14 /* COSong.swift */,
 			);
 			name = Generated;
+			sourceTree = "<group>";
+		};
+		149716DE19EB8EA300A7AD25 /* Metadata */ = {
+			isa = PBXGroup;
+			children = (
+				149716DF19EB8EB800A7AD25 /* COMetadata.swift */,
+			);
+			name = Metadata;
 			sourceTree = "<group>";
 		};
 		14CFC0F519DA5D8900EC6D53 = {
@@ -164,6 +181,7 @@
 		14CFC10019DA5D8900EC6D53 /* Concerto */ = {
 			isa = PBXGroup;
 			children = (
+				149716DE19EB8EA300A7AD25 /* Metadata */,
 				1436F13E19E0850C0000A24E /* Views */,
 				14CFC14A19DA5DD900EC6D53 /* AppDelegate.swift */,
 				14CFC12319DA5DA800EC6D53 /* Array+COExtensions.swift */,
@@ -172,7 +190,7 @@
 				14CFC12719DA5DA800EC6D53 /* COPlaylistViewController.swift */,
 				14CFC12819DA5DA800EC6D53 /* COPlaylistWindowController.swift */,
 				14CFC12919DA5DA800EC6D53 /* COPlayQueue.swift */,
-				14CFC12A19DA5DA800EC6D53 /* COPreferencesView.swift */,
+				14CFC12A19DA5DA800EC6D53 /* COPreferencesViewController.swift */,
 				14CFC13719DA5DAF00EC6D53 /* COViewController.swift */,
 				14CFC13819DA5DAF00EC6D53 /* COWindowController.swift */,
 				14CFC14019DA5DB800EC6D53 /* Observable.swift */,
@@ -183,6 +201,8 @@
 				14CFC10119DA5D8900EC6D53 /* Supporting Files */,
 				147AEC8319DB78680070818F /* MetadataEditor.xib */,
 				141557D419DC31980076F87E /* COWindow.swift */,
+				14ED0D8419E2C9DE0030A828 /* COMetadataEditorViewController.swift */,
+				1416981919EC2F4C0020BF14 /* Optional+COExtensions.swift */,
 			);
 			path = Concerto;
 			sourceTree = "<group>";
@@ -315,23 +335,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				14CFC14619DA5DB800EC6D53 /* Observable.swift in Sources */,
+				1416981A19EC2F4C0020BF14 /* Optional+COExtensions.swift in Sources */,
 				14CFC12C19DA5DA800EC6D53 /* COAlbum.swift in Sources */,
+				149716E019EB8EB800A7AD25 /* COMetadata.swift in Sources */,
 				148B02BE19DA6133000FC8F6 /* Concerto.xcdatamodeld in Sources */,
+				14ED0D8519E2C9DE0030A828 /* COMetadataEditorViewController.swift in Sources */,
 				14CFC13D19DA5DAF00EC6D53 /* COViewController.swift in Sources */,
 				14CFC12D19DA5DA800EC6D53 /* COArtist.swift in Sources */,
 				14CFC12F19DA5DA800EC6D53 /* COPlaylistViewController.swift in Sources */,
 				14CFC13C19DA5DAF00EC6D53 /* COTag.swift in Sources */,
 				14CFC13E19DA5DAF00EC6D53 /* COWindowController.swift in Sources */,
+				1416981F19EC36260020BF14 /* COSong.swift in Sources */,
 				14CFC10419DA5D8900EC6D53 /* main.swift in Sources */,
 				14CFC12E19DA5DA800EC6D53 /* COOperation.swift in Sources */,
 				14CFC13B19DA5DAF00EC6D53 /* COTableViewDelegate.swift in Sources */,
+				149716D719EB77CC00A7AD25 /* COArtist+Additions.swift in Sources */,
 				1436F14019E086CC0000A24E /* COTableView.swift in Sources */,
 				14CFC13119DA5DA800EC6D53 /* COPlayQueue.swift in Sources */,
-				14CFC13919DA5DAF00EC6D53 /* COSong.swift in Sources */,
 				14CFC12B19DA5DA800EC6D53 /* Array+COExtensions.swift in Sources */,
 				14CFC13019DA5DA800EC6D53 /* COPlaylistWindowController.swift in Sources */,
 				14CFC14519DA5DB800EC6D53 /* NSManagedObjectContext+COAdditions.swift in Sources */,
-				14CFC13219DA5DA800EC6D53 /* COPreferencesView.swift in Sources */,
+				14CFC13219DA5DA800EC6D53 /* COPreferencesViewController.swift in Sources */,
 				14CFC14B19DA5DD900EC6D53 /* AppDelegate.swift in Sources */,
 				141557D519DC31980076F87E /* COWindow.swift in Sources */,
 				1436F14219E098390000A24E /* COTableRowView.swift in Sources */,
@@ -444,6 +468,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Concerto/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;

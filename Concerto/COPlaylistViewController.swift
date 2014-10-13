@@ -1,23 +1,25 @@
 //
 //  COPlaylistViewController.swift
-//  Concerto-Swift
+//  Concerto
 //
 //  Created by Christian Benincasa on 9/21/14.
 //  Copyright (c) 2014 Christian Benincasa. All rights reserved.
 //
 
+import AppKit
 import Cocoa
 
 class COPlaylistViewController : COViewController, COPlayQueueDelegate {
     
     // MARK: Data Access
-    var managedObjectContext: NSManagedObjectContext? = nil {
+    var managedObjectContext: NSManagedObjectContext? {
         didSet {
             self.arrayController.managedObjectContext = self.managedObjectContext
         }
     }
     
     @IBOutlet var arrayController: NSArrayController! = nil
+    
     @IBOutlet var sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(key: "title", ascending: true)] {
         didSet {
             println(self.sortDescriptors as NSArray)
@@ -33,12 +35,10 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
     @IBOutlet weak var totalTime: NSTextField?
     @IBOutlet weak var repeatCheckbox: NSButton?
     @IBOutlet weak var currentlyPlayingTitle: NSTextField?
-    @IBOutlet weak var songThing: NSTextField?
-    @IBOutlet weak var songThing2: NSTextField?
     
     // MARK: Misc. objects
     let playQueue = COPlayQueue.sharedInstance
-    
+
     // MARK: init and deinit
     override init() {
         super.init()
@@ -52,6 +52,7 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+        // TODO remove KVO
     }
     
     override func viewDidLoad() {
@@ -66,6 +67,7 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
         notificationCenter.addObserver(self, selector: "queueSongsDidChange:", name: nil, object: playQueue)
     }
     
+    // MARK: Playlist functions
     @IBAction func togglePlay(sender: AnyObject) {
         if playQueue.playing {
             playQueue.pause()
@@ -92,12 +94,20 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
         }
     }
     
+    // MARK: Call back listeners
     func queueDidStartPlaying(song: COSong) {
         currentlyPlayingTitle?.stringValue = song.title
     }
     
     func queueSongsDidChange(notification: NSNotification) {
         playlistTable?.reloadData()
+        self.reloadData()
+    }
+    
+    @IBAction func openGetInfoWindow(sender: AnyObject) {
+        if let table = playlistTable {
+            let thing = COPreferencesWindowController(windowNibName: "Preferences")
+        }
     }
     
     func reloadData() {
@@ -108,13 +118,10 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
             println("don't have a managed object context...this is really bad")
         }
     }
-    
+
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
-        
         switch keyPath {
         case "arrangedObjects":
-            let prettyPrintObjects = (self.arrayController.arrangedObjects as [COSong])
-            let titles = prettyPrintObjects.map({ (song: COSong) -> String in return song.title })
             playQueue.enqueue(self.arrayController.arrangedObjects as [COSong])
             break
         default: break

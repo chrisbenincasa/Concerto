@@ -23,7 +23,7 @@
         </customObject>
         <viewController id="ClX-mB-4Wj" customClass="COPlaylistViewController" customModule="Concerto" customModuleProvider="target">
             <connections>
-                <outlet property="arrayController" destination="DuO-2T-Ndf" id="gbe-4r-IXI"/>
+                <outlet property="arrayController" destination="DuO-2T-Ndf" id="XDw-LV-dM8"/>
                 <outlet property="currentlyPlayingTitle" destination="CgF-Po-1dj" id="C2I-s7-lTy"/>
                 <outlet property="playlistTable" destination="D4S-dn-olE" id="4g9-C9-gAf"/>
                 <outlet property="view" destination="EY0-Pb-bHE" id="xHk-il-uKd"/>
@@ -39,7 +39,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="345" y="168" width="620" height="456"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <value key="minSize" type="size" width="620" height="456"/>
             <view key="contentView" id="EY0-Pb-bHE">
                 <rect key="frame" x="0.0" y="0.0" width="620" height="456"/>
@@ -201,11 +201,11 @@
                             </subviews>
                             <nil key="backgroundColor"/>
                         </clipView>
-                        <scroller key="horizontalScroller" appearanceType="vibrantLight" verticalHuggingPriority="750" horizontal="YES" id="8OB-YZ-bee">
+                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="8OB-YZ-bee">
                             <rect key="frame" x="1" y="119" width="223" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" appearanceType="vibrantLight" verticalHuggingPriority="750" horizontal="NO" id="OzO-eq-Z8i">
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="OzO-eq-Z8i">
                             <rect key="frame" x="224" y="17" width="15" height="102"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -309,11 +309,6 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="File" id="bib-Uj-vzu">
                         <items>
-                            <menuItem title="New" keyEquivalent="n" id="Was-JA-tGl">
-                                <connections>
-                                    <action selector="newDocument:" target="-1" id="4Si-XN-c54"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Open…" keyEquivalent="o" id="BGd-Q7-afB">
                                 <connections>
                                     <action selector="openDocument:" target="-1" id="8Ac-ch-eW0"/>
@@ -338,37 +333,11 @@
                                 </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
+                            <menuItem title="Get Info" enabled="NO" keyEquivalent="i" id="itC-v4-FZB"/>
+                            <menuItem isSeparatorItem="YES" id="rTX-T8-AjY"/>
                             <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
                                 <connections>
                                     <action selector="performClose:" target="-1" id="HmO-Ls-i7Q"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Save…" keyEquivalent="s" id="pxx-59-PXV">
-                                <connections>
-                                    <action selector="saveDocument:" target="-1" id="teZ-XB-qJY"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Save As…" keyEquivalent="S" id="Bw7-FT-i3A">
-                                <connections>
-                                    <action selector="saveDocumentAs:" target="-1" id="mDf-zr-I0C"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Revert to Saved" id="KaW-ft-85H">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="revertDocumentToSaved:" target="-1" id="iJ3-Pv-kwq"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
-                            <menuItem title="Page Setup…" keyEquivalent="P" id="qIS-W8-SiK">
-                                <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
-                                <connections>
-                                    <action selector="runPageLayout:" target="-1" id="Din-rz-gC5"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Print…" keyEquivalent="p" id="aTl-1u-JFS">
-                                <connections>
-                                    <action selector="print:" target="-1" id="qaZ-4w-aoO"/>
                                 </connections>
                             </menuItem>
                         </items>

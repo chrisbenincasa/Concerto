@@ -9,6 +9,12 @@
 import Cocoa
 import AVFoundation
 
+#if DEBUG
+    let shouldSave = true
+#else
+    let shouldSave = false
+#endif
+
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     private var hasLaunched: Bool = false
@@ -20,8 +26,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var preferencesController: COPreferencesWindowController?
     var mainWindowController: COPlaylistWindowController?
     
+    private let operationQueue = NSOperationQueue()
+    
     func applicationDidFinishLaunching(aNotification: NSNotification?) {        
         self.hasLaunched = true
+        
+        operationQueue.maxConcurrentOperationCount = 1
         
         playlistViewController.managedObjectContext = self.managedObjectContext
         playlistViewController.reloadData()
@@ -108,28 +118,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Core Data Saving and Undo support
 
-//    @IBAction func saveAction(sender: AnyObject!) {
-//        // Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
-//        if let moc = self.managedObjectContext {
-//            if !moc.commitEditing() {
-//                NSLog("\(NSStringFromClass(self.dynamicType)) unable to commit editing before saving")
-//            }
-//            var error: NSError? = nil
-//            if moc.hasChanges && !moc.save(&error) {
-//                NSApplication.sharedApplication().presentError(error)
-//            }
-//        }
-//    }
-
-//    func windowWillReturnUndoManager(window: NSWindow!) -> NSUndoManager! {
-//        // Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
-//        if let moc = self.managedObjectContext {
-//            return moc.undoManager
-//        } else {
-//            return nil
-//        }
-//    }
-
     func applicationShouldTerminate(sender: NSApplication!) -> NSApplicationTerminateReply {
         // Save changes in the application's managed object context before the application terminates.
         
@@ -198,24 +186,30 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let context = self.managedObjectContext
         let songs = (filenames as [String]).map({ (path: String) -> COSong in
             let url = NSURL(fileURLWithPath: path)
-            let s: COSong = context!.createEntity(ConcertoEntity.Song, shouldInsert: true)
-            let a: COArtist = context!.createEntity(ConcertoEntity.Artist, shouldInsert: true)
+            let metadata = COMetadata(url: url!)
+            let song: COSong = context!.createEntity(ConcertoEntity.Song, shouldInsert: true)
+            let artist: COArtist = context!.createEntity(ConcertoEntity.Artist, shouldInsert: true)
             
-            let asset = AVURLAsset(URL: url, options: nil)
-            let titles = AVMetadataItem.metadataItemsFromArray(asset.commonMetadata, withKey: AVMetadataCommonKeyTitle, keySpace: AVMetadataKeySpaceCommon) as [AVMetadataItem]
-            let artists = AVMetadataItem.metadataItemsFromArray(asset.commonMetadata, withKey: AVMetadataCommonKeyArtist, keySpace: AVMetadataKeySpaceCommon) as [AVMetadataItem]
-            
-            s.artist = a
-            
-            if let title = titles.first {
-                s.title = title.stringValue
-            }
-            if let artist = artists.first {
-                a.name = artist.stringValue
+            if let trackName = metadata.trackName() {
+                song.title = trackName
+            } else {
+                println("COULDNT GET TRACKNAME")
+                abort()
             }
             
-            s.setBookmarkFromPath(path)
-            return s
+            if let artistName = metadata.artistName() {
+                artist.name = artistName
+            } else {
+                println("COULDNT GET ARTIST NAME")
+                abort()
+            }
+
+
+            song.playCount = 0
+            song.setBookmarkFromPath(path)
+            song.artist = artist
+            
+            return song
         })
         
         COPlayQueue.sharedInstance.enqueue(songs)
