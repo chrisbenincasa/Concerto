@@ -1,8 +1,8 @@
 //
-//  Concerto.swift
+//  COSong.swift
 //  Concerto
 //
-//  Created by Christian Benincasa on 10/13/14.
+//  Created by Christian Benincasa on 10/19/14.
 //  Copyright (c) 2014 Christian Benincasa. All rights reserved.
 //
 
@@ -20,12 +20,12 @@ class COSong: NSManagedObject {
     @NSManaged var duration: NSNumber
     @NSManaged var fileType: String
     @NSManaged var playCount: NSNumber
+    @NSManaged var releaseDate: NSDate
     @NSManaged var title: String
     @NSManaged var trackNumber: NSNumber
     @NSManaged var year: NSNumber
-    @NSManaged var releaseDate: NSDate
-    @NSManaged var album: Concerto.COAlbum
-    @NSManaged var artist: Concerto.COArtist
+    @NSManaged var album: COAlbum
+    @NSManaged var artist: COArtist
     @NSManaged var playlists: NSSet
     @NSManaged var tags: NSSet
 

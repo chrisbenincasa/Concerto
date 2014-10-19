@@ -189,6 +189,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let metadata = COMetadata(url: url!)
             let song: COSong = context!.createEntity(ConcertoEntity.Song, shouldInsert: true)
             let artist: COArtist = context!.createEntity(ConcertoEntity.Artist, shouldInsert: true)
+            let album: COAlbum = context!.createEntity(ConcertoEntity.Album, shouldInsert: true)
             
             if let trackName = metadata.trackName() {
                 song.title = trackName
@@ -203,16 +204,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 println("COULDNT GET ARTIST NAME")
                 abort()
             }
-
+            
+            if let albumName = metadata.albumName() {
+                album.name = albumName
+            } else {
+                println("COULDNT GET ALBUM NAME")
+                abort()
+            }
 
             song.playCount = 0
             song.setBookmarkFromPath(path)
             song.artist = artist
+            song.album = album
+            let artistAlbums = artist.mutableSetValueForKey("albums")
+            artistAlbums.addObject(album)
             
             return song
         })
-        
-        COPlayQueue.sharedInstance.enqueue(songs)
     }
 }
 

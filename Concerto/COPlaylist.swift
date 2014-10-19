@@ -1,5 +1,5 @@
 //
-//  COArtist.swift
+//  COPlaylist.swift
 //  Concerto
 //
 //  Created by Christian Benincasa on 10/19/14.
@@ -9,13 +9,10 @@
 import Foundation
 import CoreData
 
-class COArtist: NSManagedObject {
+class COPlaylist: NSManagedObject {
 
-    @NSManaged var endYear: NSNumber
     @NSManaged var name: String
-    @NSManaged var sortName: String
-    @NSManaged var startYear: NSNumber
-    @NSManaged var albums: NSSet
     @NSManaged var songs: NSSet
+    @NSManaged var tags: NSSet
 
 }

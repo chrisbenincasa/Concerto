@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="1.0" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A386a" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="1.0" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A388a" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Album" representedClassName="Concerto.COAlbum" syncable="YES">
         <attribute name="lastModified" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
@@ -16,16 +16,16 @@
         <relationship name="albums" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Album" inverseName="artist" inverseEntity="Album" syncable="YES"/>
         <relationship name="songs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Song" inverseName="artist" inverseEntity="Song" syncable="YES"/>
     </entity>
-    <entity name="Playlist" representedClassName="COPlaylist" isAbstract="YES" syncable="YES">
+    <entity name="Playlist" representedClassName="Concerto.COPlaylist" isAbstract="YES" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="songs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Song" inverseName="playlists" inverseEntity="Song" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="playlists" inverseEntity="Tag" syncable="YES"/>
     </entity>
-    <entity name="RegularPlaylist" representedClassName="CORegularPlaylist" parentEntity="Playlist" syncable="YES"/>
-    <entity name="SmartPlaylist" parentEntity="Playlist" syncable="YES">
+    <entity name="RegularPlaylist" representedClassName="Concerto.CORegularPlaylist" parentEntity="Playlist" syncable="YES"/>
+    <entity name="SmartPlaylist" representedClassName="Concerto.COSmartPlaylist" parentEntity="Playlist" syncable="YES">
         <relationship name="contraints" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SmartPlaylistConstraint" inverseName="playlist" inverseEntity="SmartPlaylistConstraint" syncable="YES"/>
     </entity>
-    <entity name="SmartPlaylistConstraint" representedClassName="COSmartPlaylistContraint" syncable="YES">
+    <entity name="SmartPlaylistConstraint" representedClassName="Concerto.COSmartPlaylistContraint" syncable="YES">
         <attribute name="constraint" optional="YES" attributeType="Binary" syncable="YES"/>
         <relationship name="playlist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SmartPlaylist" inverseName="contraints" inverseEntity="SmartPlaylist" syncable="YES"/>
     </entity>
@@ -56,12 +56,12 @@
     </entity>
     <elements>
         <element name="Album" positionX="-137" positionY="207" width="128" height="133"/>
-        <element name="Artist" positionX="295" positionY="234" width="128" height="135"/>
-        <element name="Playlist" positionX="54" positionY="-252" width="128" height="90"/>
-        <element name="RegularPlaylist" positionX="277" positionY="-225" width="128" height="45"/>
+        <element name="Artist" positionX="295" positionY="234" width="128" height="133"/>
+        <element name="Playlist" positionX="54" positionY="-252" width="128" height="88"/>
+        <element name="RegularPlaylist" positionX="277" positionY="-225" width="128" height="43"/>
         <element name="SmartPlaylist" positionX="331" positionY="-130" width="128" height="58"/>
         <element name="SmartPlaylistConstraint" positionX="511" positionY="-55" width="128" height="73"/>
-        <element name="Song" positionX="-200" positionY="-270" width="128" height="300"/>
-        <element name="Tag" positionX="162" positionY="-97" width="128" height="105"/>
+        <element name="Song" positionX="-200" positionY="-270" width="128" height="298"/>
+        <element name="Tag" positionX="162" positionY="-97" width="128" height="103"/>
     </elements>
 </model>
