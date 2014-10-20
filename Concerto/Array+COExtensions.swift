@@ -35,8 +35,14 @@ extension Array {
     }
     
     func mkString(sep: String) -> String {
+        var first = true
         return self.reduce("", combine: { (accum, elem) -> String in
-            return "\(accum)\(sep)\(elem)"
+            if (first) {
+                first = false
+                return "\(elem)"
+            } else {
+                return "\(accum)\(sep)\(elem)"
+            }
         })
     }
 }
