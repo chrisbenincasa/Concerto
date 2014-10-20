@@ -216,8 +216,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             song.setBookmarkFromPath(path)
             song.artist = artist
             song.album = album
-            let artistAlbums = artist.mutableSetValueForKey("albums")
-            artistAlbums.addObject(album)
+            artist.addAlbum(album)
             
             return song
         })

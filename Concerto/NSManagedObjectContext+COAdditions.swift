@@ -47,19 +47,93 @@ extension NSManagedObjectContext {
         }
     }
     
-    func artistWithName(name: String, create: Bool) -> COArtist? {
+    func fetchObjects(entityName: String, sort: [NSSortDescriptor], predicate: NSPredicate, limit: Int) -> [AnyObject] {
+        let fetchRequest = NSFetchRequest()
+        fetchRequest.entity = NSEntityDescription.entityForName(entityName, inManagedObjectContext: self)
+        fetchRequest.sortDescriptors = sort
+        fetchRequest.predicate = predicate
+        fetchRequest.fetchLimit = limit
+        fetchRequest.shouldRefreshRefetchedObjects = true
+        var error: NSError?
+        
+        let fetchedObjects = self.executeFetchRequest(fetchRequest, error: &error)
+        
+        if error != nil {
+            println("ERROR FETCHING THING")
+            return []
+        }
+        
+        if fetchedObjects.isEmpty() {
+            return []
+        }
+        
+        return fetchedObjects!
+    }
+    
+    func firstObject<T : AnyObject>(entityName: String, sort: [NSSortDescriptor], predicate: NSPredicate) -> T? {
+        return fetchObjects(entityName, sort: sort, predicate: predicate, limit: 1).first as T?
+    }
+    
+    func songWithMetadata(title: String?, artist: String?, album: String?, create: Bool) -> COSong? {
+        var format: [String] = []
+        if let n = title {
+            format.append("title == \(n)")
+        }
+        if let a = artist {
+            format.append("artist.name == \(a)")
+        }
+        if let a = album {
+            format.append("album.name == \(a)")
+        }
+        
+        let clause = format.mkString(" AND ")
+        let predicate = NSPredicate(format: clause)
+        
+        let existingArtist: COSong? = firstObject(ConcertoEntity.Song, sort: [], predicate: predicate!)
+        
+        if existingArtist == nil && create {
+            return createEntity(ConcertoEntity.Song, shouldInsert: true) as COSong
+        } else {
+            return existingArtist
+        }
+    }
+    
+    func artistWithName(name: String?, create: Bool) -> COArtist? {
         // TODO normalize name
-        let fetched = fetchObjects(ConcertoEntity.Artist, limit: 1) as [COArtist]
-        if fetched.isEmpty {
+        let normalizedName: String = name.getOrElse("Unknown Artist")
+        
+        let predicate = NSPredicate(format: "name == \(normalizedName)")
+        
+        if let fetched = firstObject(ConcertoEntity.Artist, sort: [], predicate: predicate!) as COArtist? {
+            return fetched
+        } else {
             if create {
-                let artist: COArtist = createEntity(ConcertoEntity.Artist)
-                artist.name = name
-                return artist
+                return createEntity(ConcertoEntity.Artist, shouldInsert: true) as COArtist
             } else {
                 return nil
             }
-        } else {
-            return fetched.first
         }
+    }
+    
+    func albumWithName(name: String?, create: Bool) -> COAlbum? {
+        let normalizedName: String = name.getOrElse("Unknown Album")
+        let predicate = NSPredicate(format: "name == \(normalizedName)")
+        if let fetched = firstObject(ConcertoEntity.Album, sort: [], predicate: predicate!) as COAlbum? {
+            return fetched
+        } else {
+            if create {
+                return createEntity(ConcertoEntity.Album, shouldInsert: true) as COAlbum
+            } else {
+                return nil
+            }
+        }
+    }
+    
+    func addOrUpdateRelationships(metadata: COMetadata) -> (COSong, COArtist, COAlbum)? {
+        let song = songWithMetadata(metadata.trackName(), artist: metadata.artistName(), album: metadata.albumName(), create: true)
+        let artist = artistWithName(metadata.artistName(), create: true)
+        // TODO think about this logic a little bit more
+        
+        return nil
     }
 }

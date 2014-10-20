@@ -33,6 +33,12 @@ extension Array {
     func foreach(f: T -> ()) {
         for element in self { f(element) }
     }
+    
+    func mkString(sep: String) -> String {
+        return self.reduce("", combine: { (accum, elem) -> String in
+            return "\(accum)\(sep)\(elem)"
+        })
+    }
 }
 
 func removeObjectIdenticalTo<T: AnyObject>(value: T, #fromArray: [T]) -> [T] {
