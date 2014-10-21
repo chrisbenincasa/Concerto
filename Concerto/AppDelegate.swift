@@ -184,41 +184,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func application(sender: NSApplication!, openFiles filenames: [AnyObject]!) {
         let context = self.managedObjectContext
-        let songs = (filenames as [String]).map({ (path: String) -> COSong in
+        (filenames as [String]).foreach({ (path: String) -> Void in
             let url = NSURL(fileURLWithPath: path)
             let metadata = COMetadata(url: url!)
-            let song: COSong = context!.createEntity(ConcertoEntity.Song, shouldInsert: true)
-            let artist: COArtist = context!.createEntity(ConcertoEntity.Artist, shouldInsert: true)
-            let album: COAlbum = context!.createEntity(ConcertoEntity.Album, shouldInsert: true)
-            
-            if let trackName = metadata.trackName() {
-                song.title = trackName
-            } else {
-                println("COULDNT GET TRACKNAME")
-                abort()
-            }
-            
-            if let artistName = metadata.artistName() {
-                artist.name = artistName
-            } else {
-                println("COULDNT GET ARTIST NAME")
-                abort()
-            }
-            
-            if let albumName = metadata.albumName() {
-                album.name = albumName
-            } else {
-                println("COULDNT GET ALBUM NAME")
-                abort()
-            }
-
+            let (song, artist, album) = self.managedObjectContext!.addOrUpdateRelationships(metadata)
             song.playCount = 0
             song.setBookmarkFromPath(path)
-            song.artist = artist
-            song.album = album
-            artist.addAlbum(album)
-            
-            return song
         })
     }
 }

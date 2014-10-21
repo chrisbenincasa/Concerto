@@ -75,26 +75,28 @@ extension NSManagedObjectContext {
     }
     
     func songWithMetadata(title: String?, artist: String?, album: String?, create: Bool) -> COSong? {
-        var format: [String] = []
+        var subpredicates: [NSPredicate] = []
         if let n = title {
-            format.append("title == \(n)")
+            let predicate = NSPredicate(format: "title == %s", n)
+            subpredicates.append(predicate!)
         }
         if let a = artist {
-            format.append("artist.name == \(a)")
+            let predicate = NSPredicate(format: "artist.name == %s", a)
+            subpredicates.append(predicate!)
         }
         if let a = album {
-            format.append("album.name == \(a)")
+            let predicate = NSPredicate(format: "album.name == %s", a)
+            subpredicates.append(predicate!)
         }
         
-        let clause = format.mkString(" AND ")
-        let predicate = NSPredicate(format: clause)
+        let predicate = NSCompoundPredicate.andPredicateWithSubpredicates(subpredicates)
         
-        let existingArtist: COSong? = firstObject(ConcertoEntity.Song, sort: [], predicate: predicate!)
+        let existingSong: COSong? = firstObject(ConcertoEntity.Song, sort: [], predicate: predicate)
         
-        if existingArtist == nil && create {
+        if existingSong == nil && create {
             return createEntity(ConcertoEntity.Song, shouldInsert: true) as COSong
         } else {
-            return existingArtist
+            return existingSong
         }
     }
     
@@ -102,7 +104,7 @@ extension NSManagedObjectContext {
         // TODO normalize name
         let normalizedName: String = name.getOrElse("Unknown Artist")
         
-        let predicate = NSPredicate(format: "name == \(normalizedName)")
+        let predicate = NSPredicate(format: "name == %s", normalizedName)
         
         if let fetched = firstObject(ConcertoEntity.Artist, sort: [], predicate: predicate!) as COArtist? {
             return fetched
@@ -117,7 +119,7 @@ extension NSManagedObjectContext {
     
     func albumWithName(name: String?, create: Bool) -> COAlbum? {
         let normalizedName: String = name.getOrElse("Unknown Album")
-        let predicate = NSPredicate(format: "name == \(normalizedName)")
+        let predicate = NSPredicate(format: "name == %s", normalizedName)
         if let fetched = firstObject(ConcertoEntity.Album, sort: [], predicate: predicate!) as COAlbum? {
             return fetched
         } else {
@@ -129,11 +131,32 @@ extension NSManagedObjectContext {
         }
     }
     
-    func addOrUpdateRelationships(metadata: COMetadata) -> (COSong, COArtist, COAlbum)? {
-        let song = songWithMetadata(metadata.trackName(), artist: metadata.artistName(), album: metadata.albumName(), create: true)
-        let artist = artistWithName(metadata.artistName(), create: true)
-        // TODO think about this logic a little bit more
+    func addOrUpdateRelationships(metadata: COMetadata) -> (COSong, COArtist, COAlbum) {
+        let song = songWithMetadata(metadata.trackName(), artist: metadata.artistName(), album: metadata.albumName(), create: false).getOrElse({() -> COSong in
+            let s = self.createEntity(ConcertoEntity.Song, shouldInsert: true) as COSong
+            s.updateSongMetadata(metadata)
+            return s
+        }())
         
-        return nil
+        let artist = artistWithName(metadata.artistName(), create: false).getOrElse({() -> COArtist in
+            let a = self.createEntity(ConcertoEntity.Artist, shouldInsert: true) as COArtist
+            a.name = metadata.artistName()!
+            return a
+        }())
+        
+        let album = albumWithName(metadata.albumName(), create: false).getOrElse({() -> COAlbum in
+            let a = self.createEntity(ConcertoEntity.Album, shouldInsert: true) as COAlbum
+            a.name = metadata.albumName()!
+            return a
+        }())
+        
+        song.artist = artist
+        song.album = album
+        artist.addSong(song)
+        artist.addAlbum(album)
+        album.artist = artist
+        album.addSong(song)
+        
+        return (song, artist, album)
     }
 }

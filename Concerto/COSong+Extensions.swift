@@ -9,7 +9,17 @@
 import Cocoa
 import AVFoundation
 
-extension COSong {    
+extension COSong {
+    // Updates metadata pertaining to a song, but not its relationships
+    func updateSongMetadata(metadata: COMetadata) {
+        // Minimum viable information
+        let songName = metadata.trackName()
+        
+        assert(songName.nonEmpty())
+        
+        self.title = songName!
+    }
+    
     func setBookmarkFromPath(path: String) -> Bool {
         var error: NSError?
         let url = NSURL.fileURLWithPath(path, isDirectory: false)

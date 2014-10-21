@@ -20,6 +20,7 @@
 		1436F14019E086CC0000A24E /* COTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1436F13F19E086CC0000A24E /* COTableView.swift */; };
 		1436F14219E098390000A24E /* COTableRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1436F14119E098390000A24E /* COTableRowView.swift */; };
 		1436F14419E099940000A24E /* COTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1436F14319E099940000A24E /* COTableCellView.swift */; };
+		1457F85219F6AF76004B8FFB /* COAlbum+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1457F85119F6AF76004B8FFB /* COAlbum+Extensions.swift */; };
 		147AEC8419DB78680070818F /* MetadataEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 147AEC8319DB78680070818F /* MetadataEditor.xib */; };
 		148B02BE19DA6133000FC8F6 /* Concerto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 148B02BC19DA6133000FC8F6 /* Concerto.xcdatamodeld */; };
 		149716D719EB77CC00A7AD25 /* COArtist+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149716D619EB77CC00A7AD25 /* COArtist+Additions.swift */; };
@@ -70,6 +71,7 @@
 		1436F13F19E086CC0000A24E /* COTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COTableView.swift; sourceTree = "<group>"; };
 		1436F14119E098390000A24E /* COTableRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COTableRowView.swift; sourceTree = "<group>"; };
 		1436F14319E099940000A24E /* COTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COTableCellView.swift; sourceTree = "<group>"; };
+		1457F85119F6AF76004B8FFB /* COAlbum+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "COAlbum+Extensions.swift"; sourceTree = "<group>"; };
 		147AEC8319DB78680070818F /* MetadataEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MetadataEditor.xib; sourceTree = "<group>"; };
 		148B02BD19DA6133000FC8F6 /* Concerto.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Concerto.xcdatamodel; sourceTree = "<group>"; };
 		149716D619EB77CC00A7AD25 /* COArtist+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "COArtist+Additions.swift"; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				14CFC13419DA5DAF00EC6D53 /* COSong+Extensions.swift */,
 				14CFC13F19DA5DB800EC6D53 /* NSManagedObjectContext+COAdditions.swift */,
 				149716D619EB77CC00A7AD25 /* COArtist+Additions.swift */,
+				1457F85119F6AF76004B8FFB /* COAlbum+Extensions.swift */,
 			);
 			name = Additions;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				141557D519DC31980076F87E /* COWindow.swift in Sources */,
 				1436F14219E098390000A24E /* COTableRowView.swift in Sources */,
 				1436F14419E099940000A24E /* COTableCellView.swift in Sources */,
+				1457F85219F6AF76004B8FFB /* COAlbum+Extensions.swift in Sources */,
 				14CFC14719DA5DB800EC6D53 /* Utilities.swift in Sources */,
 				14CFC13A19DA5DAF00EC6D53 /* COSong+Extensions.swift in Sources */,
 			);
