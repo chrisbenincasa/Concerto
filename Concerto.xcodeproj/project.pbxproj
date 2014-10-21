@@ -39,7 +39,6 @@
 		14CFC13D19DA5DAF00EC6D53 /* COViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC13719DA5DAF00EC6D53 /* COViewController.swift */; };
 		14CFC13E19DA5DAF00EC6D53 /* COWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC13819DA5DAF00EC6D53 /* COWindowController.swift */; };
 		14CFC14519DA5DB800EC6D53 /* NSManagedObjectContext+COAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC13F19DA5DB800EC6D53 /* NSManagedObjectContext+COAdditions.swift */; };
-		14CFC14619DA5DB800EC6D53 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC14019DA5DB800EC6D53 /* Observable.swift */; };
 		14CFC14719DA5DB800EC6D53 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC14119DA5DB800EC6D53 /* Utilities.swift */; };
 		14CFC14919DA5DB800EC6D53 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14CFC14419DA5DB800EC6D53 /* Preferences.xib */; };
 		14CFC14B19DA5DD900EC6D53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFC14A19DA5DD900EC6D53 /* AppDelegate.swift */; };
@@ -94,7 +93,6 @@
 		14CFC13719DA5DAF00EC6D53 /* COViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COViewController.swift; sourceTree = "<group>"; };
 		14CFC13819DA5DAF00EC6D53 /* COWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COWindowController.swift; sourceTree = "<group>"; };
 		14CFC13F19DA5DB800EC6D53 /* NSManagedObjectContext+COAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+COAdditions.swift"; sourceTree = "<group>"; };
-		14CFC14019DA5DB800EC6D53 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		14CFC14119DA5DB800EC6D53 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		14CFC14419DA5DB800EC6D53 /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		14CFC14A19DA5DD900EC6D53 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -208,7 +206,6 @@
 				14CFC12A19DA5DA800EC6D53 /* COPreferencesViewController.swift */,
 				14CFC13719DA5DAF00EC6D53 /* COViewController.swift */,
 				14CFC13819DA5DAF00EC6D53 /* COWindowController.swift */,
-				14CFC14019DA5DB800EC6D53 /* Observable.swift */,
 				14CFC14119DA5DB800EC6D53 /* Utilities.swift */,
 				14CFC10A19DA5D8900EC6D53 /* Images.xcassets */,
 				14CFC14C19DA5E1800EC6D53 /* MainMenu.xib */,
@@ -349,7 +346,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14CFC14619DA5DB800EC6D53 /* Observable.swift in Sources */,
 				1416981A19EC2F4C0020BF14 /* Optional+COExtensions.swift in Sources */,
 				149716E019EB8EB800A7AD25 /* COMetadata.swift in Sources */,
 				141D681119F46A250059003F /* COSmartPlaylist.swift in Sources */,
