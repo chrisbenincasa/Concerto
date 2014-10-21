@@ -100,7 +100,6 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
     }
     
     func queueSongsDidChange(notification: NSNotification) {
-        playlistTable?.reloadData()
         self.reloadData()
     }
     

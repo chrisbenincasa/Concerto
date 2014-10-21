@@ -136,7 +136,10 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
             addPendingItem(next)
         }
         
-        observers.foreach { $0.queueDidStartPlaying!(songToPlay) }
+        self.observers.foreach { [unowned self] (d: COPlayQueueDelegate) -> Void in
+            d.queueDidStartPlaying?(songToPlay)
+            return
+        }
     }
     
     func pause() {
@@ -197,6 +200,12 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
             }
         } else {
             addPendingItem(self.songSet[currentIndex + 1] as COSong)
+        }
+        
+        let currentSong = self.songSet[currentIndex] as COSong
+        self.observers.foreach { [unowned self] (d: COPlayQueueDelegate) -> Void in
+            d.queueDidStartPlaying?(currentSong)
+            return
         }
     }
     
