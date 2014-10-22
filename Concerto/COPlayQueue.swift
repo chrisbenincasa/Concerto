@@ -212,6 +212,11 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
     func previous() {
         if self.playing {
             if currentPlayer!.currentTime < 10.0 {
+                if currentIndex - 1 < 0 {
+                    self.stop()
+                    return
+                }
+                
                 play(index: currentIndex - 1)
             } else {
                 currentPlayer!.currentTime = 0.0
