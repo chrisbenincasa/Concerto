@@ -9,10 +9,20 @@
 import Cocoa
 import AVFoundation
 
+enum COMetadataKey {
+    case SongTitle
+    case SongTrackNumber
+    case SongReleaseDate
+    case SongDuration
+    case SongYear
+    case ArtistName
+    case AlbumName
+}
+
 class COMetadata: NSObject {
 
     var asset: AVURLAsset
-    var metadataDictionary: [String : AVMetadataItem] = [:]
+    var metadataDictionary: [COMetadataKey : AnyObject] = [:]
     var commonArray: [AnyObject]
     lazy var id3Array: [AnyObject] = loadMetadataForFormat(self)(AVMetadataFormatID3Metadata)
     lazy var iTunesArray: [AnyObject] = loadMetadataForFormat(self)(AVMetadataFormatiTunesMetadata)
@@ -34,33 +44,74 @@ class COMetadata: NSObject {
     // MARK: Song metadata
     
     func trackName() -> String? {
-        var artist = {
-            self.getFilteredMetadata(AVMetadataCommonIdentifierTitle, id3Identifier: AVMetadataIdentifierID3MetadataTitleDescription, iTunesIdentifier: AVMetadataIdentifieriTunesMetadataSongName).orElse(
-                self.getMetadataForKey(commonKey: AVMetadataCommonKeyTitle, ID3Key: AVMetadataID3MetadataKeyTitleDescription, iTunesKey: AVMetadataiTunesMetadataKeySongName)
-            )
-        }()
-        
-        return artist?.stringValue
+        if let tname: AnyObject = metadataDictionary[.SongTitle] {
+            return tname as? String
+        } else {
+            let tname = self.getFilteredMetadata(AVMetadataCommonIdentifierTitle, AVMetadataIdentifierID3MetadataTitleDescription, AVMetadataIdentifieriTunesMetadataSongName)?.stringValue
+            
+            if tname != nil {
+                metadataDictionary[.SongTitle] = tname!
+            }
+            
+            return tname
+        }
+    }
+    
+    func trackNumber() -> Int? {
+        if let num: AnyObject = metadataDictionary[.SongTrackNumber] {
+            return num as? Int
+        } else {
+            let num = self.getFilteredMetadata(nil, AVMetadataIdentifierID3MetadataTrackNumber, AVMetadataIdentifieriTunesMetadataTrackNumber)?.numberValue as? Int
+            
+            if num != nil {
+                metadataDictionary[.SongTitle] = num!
+            }
+            
+            return num
+        }
+    }
+    
+    func duration() -> Int? {
+        if let num: AnyObject = metadataDictionary[.SongTrackNumber] {
+            return num as? Int
+        } else {
+            var x: [AnyObject] = self.commonArray
+            x.extend(self.id3Array)
+            x.extend(self.iTunesArray)
+            
+            let d = (x.first as? AVMetadataItem).map({ $0.duration })
+            
+            return d.map({ (duration: CMTime) -> Int in
+                println(duration.value, duration.timescale)
+                let time: Int = Int(duration.value)
+                self.metadataDictionary[.SongDuration] = time
+                return time
+            })
+        }
     }
     
     func releaseDate() -> NSDate? {
-        var date = {
-            self.getFilteredMetadata(nil, id3Identifier: AVMetadataIdentifierID3MetadataReleaseTime, iTunesIdentifier: AVMetadataIdentifieriTunesMetadataReleaseDate).orElse(
-                self.getMetadataForKey(ID3Key: AVMetadataID3MetadataKeyReleaseTime, iTunesKey: AVMetadataiTunesMetadataKeyReleaseDate, commonKey: nil)
-            )
-        }()
-        
-        return date?.dateValue
+        if let num: AnyObject = metadataDictionary[.SongTitle] {
+            return num as? NSDate
+        } else {
+            return self.getFilteredMetadata(nil, AVMetadataIdentifierID3MetadataReleaseTime, AVMetadataIdentifieriTunesMetadataReleaseDate).map { [unowned self] (item: AVMetadataItem) -> NSDate in
+                let dateValue = item.dateValue
+                self.metadataDictionary[.SongReleaseDate] = dateValue
+                return dateValue
+            }
+        }
     }
     
     func year() -> Int? {
-        var year = {
-            self.getFilteredMetadata(nil, id3Identifier: AVMetadataIdentifierID3MetadataYear, iTunesIdentifier: AVMetadataIdentifieriTunesMetadataReleaseDate).orElse(
-                self.getMetadataForKey(ID3Key: AVMetadataID3MetadataKeyYear, iTunesKey: AVMetadataiTunesMetadataKeyReleaseDate, commonKey: nil)
-            )
-        }()
-
-        return year?.numberValue as? Int
+        if let year: AnyObject = metadataDictionary[.SongYear] {
+            return year as? Int
+        } else {
+            return self.getFilteredMetadata(nil, AVMetadataIdentifierID3MetadataReleaseTime, AVMetadataIdentifieriTunesMetadataReleaseDate).map { [unowned self] (item: AVMetadataItem) -> Int in
+                let year = item.numberValue as Int
+                self.metadataDictionary[.SongYear] = year
+                return year
+            }
+        }
     }
     
     func bitRate() -> Int? {
@@ -70,36 +121,34 @@ class COMetadata: NSObject {
     // MARK: Artist metadata
     
     func artistName() -> String? {
-        var artist = {
-            self.getFilteredMetadata(AVMetadataCommonIdentifierArtist, id3Identifier: AVMetadataIdentifierID3MetadataOriginalArtist, iTunesIdentifier: AVMetadataIdentifieriTunesMetadataArtist).orElse(
-                self.getMetadataForKey(commonKey: AVMetadataCommonKeyArtist,
-                    ID3Key: AVMetadataID3MetadataKeyOriginalArtist,
-                    iTunesKey: AVMetadataiTunesMetadataKeyArtist)
-            )
-        }()
-
-        return artist?.stringValue
+        if let artist: AnyObject = metadataDictionary[.ArtistName] {
+            return artist as? String
+        } else {
+            return self.getFilteredMetadata(AVMetadataCommonIdentifierArtist, AVMetadataIdentifierID3MetadataOriginalArtist, AVMetadataIdentifieriTunesMetadataArtist).map { [unowned self] (item: AVMetadataItem) -> String in
+                let artist = item.stringValue
+                self.metadataDictionary[.ArtistName] = artist
+                return artist
+            }
+        }
     }
     
     // MARK: Album metadata
     
     func albumName() -> String? {
-        var album = {
-            self.getFilteredMetadata(AVMetadataCommonIdentifierAlbumName, id3Identifier: AVMetadataIdentifierID3MetadataAlbumTitle, iTunesIdentifier: AVMetadataIdentifieriTunesMetadataAlbum).orElse(
-                self.getMetadataForKey(commonKey: AVMetadataCommonIdentifierAlbumName,
-                                       ID3Key: AVMetadataID3MetadataKeyOriginalArtist,
-                                       iTunesKey: AVMetadataiTunesMetadataKeyArtist)
-            )
-        }()
-
-        return album?.stringValue
+        if let artist: AnyObject = metadataDictionary[.AlbumName] {
+            return artist as? String
+        } else {
+            return self.getFilteredMetadata(AVMetadataCommonIdentifierAlbumName, AVMetadataIdentifierID3MetadataAlbumTitle, AVMetadataIdentifieriTunesMetadataAlbum).map { [unowned self] (item: AVMetadataItem) -> String in
+                let album = item.stringValue
+                self.metadataDictionary[.AlbumName] = album
+                return album
+            }
+        }
     }
     
-    private func getFilteredMetadata(commonIdentifier: String?, id3Identifier: String?, iTunesIdentifier: String?) -> AVMetadataItem? {
-        assert(commonIdentifier != nil && id3Identifier != nil && iTunesIdentifier != nil, "EVERYTHING IS NIL")
-        
+    private func getFilteredMetadata(commonIdentifier: String?, _ id3Identifier: String?, _ iTunesIdentifier: String?) -> AVMetadataItem? {
         if let cid = commonIdentifier {
-            let item = AVMetadataItem.metadataItemsFromArray(self.commonArray, filteredByIdentifier: cid).first as? AVMetadataItem
+            let item = AVMetadataItem.metadataItemsFromArray(commonArray, filteredByIdentifier: cid).first as? AVMetadataItem
             if (item != nil) {
                 return item
             }
@@ -120,46 +169,5 @@ class COMetadata: NSObject {
         }
         
         return nil
-    }
-    
-    private func getMetadataForKey(ID3Key: String? = nil, iTunesKey: String? = nil, commonKey: String? = nil) -> AVMetadataItem? {
-        assert(commonKey != nil && ID3Key != nil && iTunesKey != nil, "They're all nil!!")
-                
-        var item: AVMetadataItem?
-        if let ck = commonKey {
-            item = getMetadataValue(ck, keySpace: AVMetadataKeySpaceCommon)
-            if item != nil {
-                return item
-            }
-        }
-        
-        if let id3 = ID3Key {
-            item = getMetadataValue(id3, keySpace: AVMetadataKeySpaceID3)
-            if item != nil {
-                return item
-            }
-        }
-        
-        if let itunes = iTunesKey {
-            item = getMetadataValue(itunes, keySpace: AVMetadataKeySpaceiTunes)
-            if item != nil {
-                return item
-            }
-        }
-        
-        return nil
-    }
-    
-    private func getMetadataValue(key: String, keySpace: String) -> AVMetadataItem? {
-        if metadataDictionary[key] != nil {
-            return metadataDictionary[key]
-        } else {
-            let asset = AVMetadataItem.metadataItemsFromArray(self.asset.commonMetadata, withKey: key, keySpace: keySpace) as [AVMetadataItem]
-            if let value = asset.first? {
-                metadataDictionary[key] = value
-            }
-            
-            return asset.first?
-        }
     }
 }

@@ -17,7 +17,7 @@ extension COSong {
         
         assert(songName.nonEmpty())
         
-        self.title = songName!
+        self.title = songName.getOrElse("Unknown Title")
     }
     
     func setBookmarkFromPath(path: String) -> Bool {

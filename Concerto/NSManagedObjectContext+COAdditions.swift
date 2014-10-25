@@ -74,12 +74,10 @@ extension NSManagedObjectContext {
         return fetchObjects(entityName, sort: sort, predicate: predicate, limit: 1).first as T?
     }
     
-    func songWithMetadata(title: String?, artist: String?, album: String?, create: Bool) -> COSong? {
-        var subpredicates: [NSPredicate] = []
-        if let n = title {
-            let predicate = NSPredicate(format: "title == %s", n)
-            subpredicates.append(predicate!)
-        }
+    func songWithMetadata(title: String, artist: String?, album: String?, create: Bool) -> COSong? {
+        let titlePred = NSPredicate(format: "title == %s", title)
+        var subpredicates: [NSPredicate] = [titlePred!]
+        
         if let a = artist {
             let predicate = NSPredicate(format: "artist.name == %s", a)
             subpredicates.append(predicate!)
@@ -132,7 +130,8 @@ extension NSManagedObjectContext {
     }
     
     func addOrUpdateRelationships(metadata: COMetadata) -> (COSong, COArtist, COAlbum) {
-        let song = songWithMetadata(metadata.trackName(), artist: metadata.artistName(), album: metadata.albumName(), create: false).getOrElse({() -> COSong in
+        let song = songWithMetadata(metadata.trackName().getOrElse("Unknown Title"), artist: metadata.artistName(), album: metadata.albumName(), create: false).getOrElse({() -> COSong in
+            
             let s = self.createEntity(ConcertoEntity.Song, shouldInsert: true) as COSong
             s.updateSongMetadata(metadata)
             return s

@@ -276,7 +276,7 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
 }
 
 // NSTableViewDataSource extensions
-extension COPlayQueue : NSTableViewDataSource {
+extension COPlayQueue : NSTableViewDataSource, NSTableViewDelegate {
     func numberOfRowsInTableView(aTableView: NSTableView!) -> Int {
         return self.songSet.count
     }
