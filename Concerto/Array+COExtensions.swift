@@ -34,6 +34,15 @@ extension Array {
         for element in self { f(element) }
     }
     
+    func flatMap<U>(f: (T) -> [U]) -> Array<U> {
+        var seq: [U] = []
+        self.foreach { (i: T) -> Void in
+            seq.extend(f(i))
+        }
+        
+        return seq
+    }
+    
     func mkString(sep: String) -> String {
         var first = true
         return self.reduce("", combine: { (accum, elem) -> String in

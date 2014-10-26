@@ -135,6 +135,7 @@ extension NSManagedObjectContext {
             
             let s = self.createEntity(ConcertoEntity.Song, shouldInsert: true) as COSong
             s.updateSongMetadata(metadata)
+            s.playCount = 0
             return s
         }())
         

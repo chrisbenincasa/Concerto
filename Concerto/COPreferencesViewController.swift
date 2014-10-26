@@ -9,5 +9,5 @@
 import Cocoa
 
 class COPreferencesWindowController : NSWindowController {
-    
+    var metadataWindow: NSWindow?
 }

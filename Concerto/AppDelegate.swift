@@ -24,6 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBOutlet weak var preferencesWindow: NSWindow?
     var preferencesController: COPreferencesWindowController?
+    var metadataEditorController: COWindowController?
     var mainWindowController: COPlaylistWindowController?
     
     private let operationQueue = NSOperationQueue()
@@ -161,8 +162,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // Preferences Window
     @IBAction func openPreferencesWindow(sender: AnyObject!) {
-        preferencesController = COPreferencesWindowController(windowNibName: "Preferences")
+        if preferencesController == nil {
+            preferencesController = COPreferencesWindowController(windowNibName: "Preferences")
+        }
         preferencesController!.showWindow(sender)
+    }
+    
+    @IBAction func openMetadataEditorWindow(sender: AnyObject!) {
+        if metadataEditorController == nil {
+            metadataEditorController = COWindowController(windowNibName: "MetadataEditor")
+        }
+        
+        metadataEditorController!.showWindow(sender)
     }
     
     @IBAction func openSongs(sender: AnyObject!) {
@@ -184,13 +195,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func application(sender: NSApplication!, openFiles filenames: [AnyObject]!) {
         let context = self.managedObjectContext
-        (filenames as [String]).foreach({ (path: String) -> Void in
+        
+        (filenames as [String]).foreach { (path: String) -> Void in
             let url = NSURL(fileURLWithPath: path)
             let metadata = COMetadata(url: url!)
             let (song, artist, album) = self.managedObjectContext!.addOrUpdateRelationships(metadata)
             song.playCount = 0
             song.setBookmarkFromPath(path)
-        })
+        }
     }
 }
 

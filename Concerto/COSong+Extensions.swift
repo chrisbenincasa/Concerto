@@ -17,7 +17,10 @@ extension COSong {
         
         assert(songName.nonEmpty())
         
-        self.title = songName.getOrElse("Unknown Title")
+        self.title = songName!
+        if let bpm = metadata.beatsPerMinute() {
+            self.bpm = bpm
+        }
     }
     
     func setBookmarkFromPath(path: String) -> Bool {

@@ -118,9 +118,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		14192B4B19FD755A003D8105 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				14ED0D8419E2C9DE0030A828 /* COMetadataEditorViewController.swift */,
+				14CFC12719DA5DA800EC6D53 /* COPlaylistViewController.swift */,
+				14CFC12819DA5DA800EC6D53 /* COPlaylistWindowController.swift */,
+				14CFC12A19DA5DA800EC6D53 /* COPreferencesViewController.swift */,
+				14CFC13719DA5DAF00EC6D53 /* COViewController.swift */,
+				14CFC13819DA5DAF00EC6D53 /* COWindowController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		14192B4C19FD7576003D8105 /* UIs */ = {
+			isa = PBXGroup;
+			children = (
+				14CFC14C19DA5E1800EC6D53 /* MainMenu.xib */,
+				147AEC8319DB78680070818F /* MetadataEditor.xib */,
+				14CFC14419DA5DB800EC6D53 /* Preferences.xib */,
+			);
+			name = UIs;
+			sourceTree = "<group>";
+		};
+		14192B4D19FD75BB003D8105 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				14CFC12619DA5DA800EC6D53 /* COOperation.swift */,
+				14CFC12919DA5DA800EC6D53 /* COPlayQueue.swift */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
 		1436F13E19E0850C0000A24E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				14192B4C19FD7576003D8105 /* UIs */,
+				141557D419DC31980076F87E /* COWindow.swift */,
 				14CFC13519DA5DAF00EC6D53 /* COTableViewDelegate.swift */,
 				1436F13F19E086CC0000A24E /* COTableView.swift */,
 				1436F14119E098390000A24E /* COTableRowView.swift */,
@@ -194,27 +228,17 @@
 		14CFC10019DA5D8900EC6D53 /* Concerto */ = {
 			isa = PBXGroup;
 			children = (
-				149716DE19EB8EA300A7AD25 /* Metadata */,
-				1436F13E19E0850C0000A24E /* Views */,
 				14CFC14A19DA5DD900EC6D53 /* AppDelegate.swift */,
 				14CFC12319DA5DA800EC6D53 /* Array+COExtensions.swift */,
-				147AEC8519DB79C00070818F /* Model */,
-				14CFC12619DA5DA800EC6D53 /* COOperation.swift */,
-				14CFC12719DA5DA800EC6D53 /* COPlaylistViewController.swift */,
-				14CFC12819DA5DA800EC6D53 /* COPlaylistWindowController.swift */,
-				14CFC12919DA5DA800EC6D53 /* COPlayQueue.swift */,
-				14CFC12A19DA5DA800EC6D53 /* COPreferencesViewController.swift */,
-				14CFC13719DA5DAF00EC6D53 /* COViewController.swift */,
-				14CFC13819DA5DAF00EC6D53 /* COWindowController.swift */,
+				1416981919EC2F4C0020BF14 /* Optional+COExtensions.swift */,
 				14CFC14119DA5DB800EC6D53 /* Utilities.swift */,
 				14CFC10A19DA5D8900EC6D53 /* Images.xcassets */,
-				14CFC14C19DA5E1800EC6D53 /* MainMenu.xib */,
-				14CFC14419DA5DB800EC6D53 /* Preferences.xib */,
+				14192B4B19FD755A003D8105 /* Controllers */,
+				14192B4D19FD75BB003D8105 /* Core */,
+				149716DE19EB8EA300A7AD25 /* Metadata */,
+				147AEC8519DB79C00070818F /* Model */,
 				14CFC10119DA5D8900EC6D53 /* Supporting Files */,
-				147AEC8319DB78680070818F /* MetadataEditor.xib */,
-				141557D419DC31980076F87E /* COWindow.swift */,
-				14ED0D8419E2C9DE0030A828 /* COMetadataEditorViewController.swift */,
-				1416981919EC2F4C0020BF14 /* Optional+COExtensions.swift */,
+				1436F13E19E0850C0000A24E /* Views */,
 			);
 			path = Concerto;
 			sourceTree = "<group>";

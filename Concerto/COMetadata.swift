@@ -14,6 +14,7 @@ enum COMetadataKey {
     case SongTrackNumber
     case SongReleaseDate
     case SongDuration
+    case SongBeatsPerMinute
     case SongYear
     case ArtistName
     case AlbumName
@@ -116,6 +117,19 @@ class COMetadata: NSObject {
     
     func bitRate() -> Int? {
         return nil // TODO implement this
+    }
+    
+    func beatsPerMinute() -> Int? {
+        if let bpm: AnyObject = metadataDictionary[.SongBeatsPerMinute] {
+            return bpm as? Int
+        } else {
+            return self.getFilteredMetadata(nil, AVMetadataIdentifierID3MetadataBeatsPerMinute, AVMetadataIdentifieriTunesMetadataBeatsPerMin).map { [unowned self] (item: AVMetadataItem) -> Int in
+             
+                let bpm = item.numberValue as Int
+                self.metadataDictionary[.SongBeatsPerMinute] = bpm
+                return bpm
+            }
+        }
     }
     
     // MARK: Artist metadata

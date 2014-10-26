@@ -14,7 +14,10 @@ class COTableViewDelegate : NSObject, NSTableViewDelegate, NSTableViewDataSource
     private let rowIdentifier = "COTableRowView"
     
     @IBOutlet weak var myTableView: NSTableView!
+    dynamic var somethingSelected: Bool = false
+    
     let playQueue = COPlayQueue.sharedInstance
+    var selectedRow: Int? = nil
     
     override func awakeFromNib() {
         myTableView.target = self
@@ -40,5 +43,15 @@ class COTableViewDelegate : NSObject, NSTableViewDelegate, NSTableViewDataSource
         if myTableView.clickedRow >= 0 {
             COPlayQueue.sharedInstance.play(index: myTableView.clickedRow)
         }
+    }
+    
+    func tableView(tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+        // TODO send notification to update metadata window
+        
+        return true
+    }
+    
+    func tableViewSelectionDidChange(notification: NSNotification) {
+        self.somethingSelected = true
     }
 }

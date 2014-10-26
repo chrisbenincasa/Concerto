@@ -9,5 +9,8 @@
 import Cocoa
 
 class COWindowController: NSWindowController {
-    
+    override func showWindow(sender: AnyObject?) {
+        super.showWindow(sender)
+        self.window?.makeKeyAndOrderFront(nil)
+    }
 }

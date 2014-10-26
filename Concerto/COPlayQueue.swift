@@ -284,4 +284,10 @@ extension COPlayQueue : NSTableViewDataSource, NSTableViewDelegate {
     func tableView(tableView: NSTableView!, objectValueForTableColumn tableColumn: NSTableColumn!, row: Int) -> AnyObject! {
         return self.songSet[row]
     }
+    
+    func tableView(tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+        println(row)
+        
+        return true
+    }
 }
