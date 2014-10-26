@@ -84,7 +84,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // Custom options
             let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
             
-            if coordinator!.addPersistentStoreWithType(NSXMLStoreType, configuration: nil, URL: url, options: options as NSDictionary, error: &error) == nil {
+            if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options as NSDictionary, error: &error) == nil {
                 coordinator = nil
             }
         }

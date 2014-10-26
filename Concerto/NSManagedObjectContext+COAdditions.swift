@@ -54,6 +54,7 @@ extension NSManagedObjectContext {
         fetchRequest.predicate = predicate
         fetchRequest.fetchLimit = limit
         fetchRequest.shouldRefreshRefetchedObjects = true
+        
         var error: NSError?
         
         let fetchedObjects = self.executeFetchRequest(fetchRequest, error: &error)
@@ -75,15 +76,15 @@ extension NSManagedObjectContext {
     }
     
     func songWithMetadata(title: String, artist: String?, album: String?, create: Bool) -> COSong? {
-        let titlePred = NSPredicate(format: "title == %s", title)
+        let titlePred = NSPredicate(format: "title == %@", title)
         var subpredicates: [NSPredicate] = [titlePred!]
         
         if let a = artist {
-            let predicate = NSPredicate(format: "artist.name == %s", a)
+            let predicate = NSPredicate(format: "artist.name == %@", a)
             subpredicates.append(predicate!)
         }
         if let a = album {
-            let predicate = NSPredicate(format: "album.name == %s", a)
+            let predicate = NSPredicate(format: "album.name == %@", a)
             subpredicates.append(predicate!)
         }
         
@@ -102,7 +103,7 @@ extension NSManagedObjectContext {
         // TODO normalize name
         let normalizedName: String = name.getOrElse("Unknown Artist")
         
-        let predicate = NSPredicate(format: "name == %s", normalizedName)
+        let predicate = NSPredicate(format: "name == %@", normalizedName)
         
         if let fetched = firstObject(ConcertoEntity.Artist, sort: [], predicate: predicate!) as COArtist? {
             return fetched
@@ -117,7 +118,7 @@ extension NSManagedObjectContext {
     
     func albumWithName(name: String?, create: Bool) -> COAlbum? {
         let normalizedName: String = name.getOrElse("Unknown Album")
-        let predicate = NSPredicate(format: "name == %s", normalizedName)
+        let predicate = NSPredicate(format: "name == %@", normalizedName)
         if let fetched = firstObject(ConcertoEntity.Album, sort: [], predicate: predicate!) as COAlbum? {
             return fetched
         } else {
