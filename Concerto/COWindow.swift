@@ -8,6 +8,17 @@
 
 import Cocoa
 
+extension NSWindow {
+    func fadeIn(sender: AnyObject!) {
+        self.alphaValue = 0.5
+        self.makeKeyAndOrderFront(sender)
+        NSAnimationContext.beginGrouping()
+        NSAnimationContext.currentContext().duration = 0.1
+        self.animator().alphaValue = 1.0
+        NSAnimationContext.endGrouping()
+    }
+}
+
 class COWindow: NSWindow {
 
 //    required init?(coder: NSCoder) {
