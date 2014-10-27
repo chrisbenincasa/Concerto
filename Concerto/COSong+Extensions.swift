@@ -21,6 +21,10 @@ extension COSong {
         if let bpm = metadata.beatsPerMinute() {
             self.bpm = bpm
         }
+        
+        if let trackNumber = metadata.trackNumber() {
+            self.trackNumber = trackNumber
+        }
     }
     
     func setBookmarkFromPath(path: String) -> Bool {

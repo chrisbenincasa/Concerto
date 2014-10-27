@@ -20,7 +20,11 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
     
     @IBOutlet var arrayController: NSArrayController! = nil
     
-    @IBOutlet var sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(key: "title", ascending: true)] {
+    @IBOutlet var sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(key: "trackNumber", ascending: true), NSSortDescriptor(key: "artist.name", ascending: true)] {
+        willSet(descriptors) {
+            println("setting \(descriptors as NSArray) as new sort descriptors")
+        }
+        
         didSet {
             println(self.sortDescriptors as NSArray)
         }
@@ -111,7 +115,7 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
     
     func reloadData() {
         if let context = self.managedObjectContext {
-            self.arrayController.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)] as NSArray
+            self.arrayController.sortDescriptors = self.sortDescriptors
             self.arrayController.fetch(nil)
         } else {
             println("don't have a managed object context...this is really bad")

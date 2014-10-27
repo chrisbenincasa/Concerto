@@ -62,13 +62,24 @@ class COMetadata: NSObject {
         if let num: AnyObject = metadataDictionary[.SongTrackNumber] {
             return num as? Int
         } else {
-            let num = self.getFilteredMetadata(nil, AVMetadataIdentifierID3MetadataTrackNumber, AVMetadataIdentifieriTunesMetadataTrackNumber)?.numberValue as? Int
+            let num = self.getFilteredMetadata(nil, AVMetadataIdentifierID3MetadataTrackNumber, AVMetadataIdentifieriTunesMetadataTrackNumber)
             
-            if num != nil {
-                metadataDictionary[.SongTitle] = num!
+            let valueToReturn: Int? = {
+                if let trackStr = num?.stringValue {
+                    let split = trackStr.componentsSeparatedByString("/").first.getOrElse(trackStr)
+                    return split.toInt()
+                } else if let trackNum = num?.numberValue as? Int {
+                    return trackNum
+                }
+                
+                return nil
+            }()
+            
+            if valueToReturn != nil {
+                metadataDictionary[.SongTitle] = valueToReturn
             }
             
-            return num
+            return valueToReturn
         }
     }
     

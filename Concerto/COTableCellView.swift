@@ -8,9 +8,10 @@
 
 import Cocoa
 
-class COTableCellView: NSTableCellView {    
+class COTableCellView: NSTableCellView {
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)
-        self.textField?.sizeToFit() // Increase size of internal text field to fit the width of the column
+//        self.textField?.sizeToFit() // Increase size of internal text field to fit the width of the column
+        
     }
 }
