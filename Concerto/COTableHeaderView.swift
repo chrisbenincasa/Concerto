@@ -16,7 +16,9 @@ class COTableHeaderView: NSTableHeaderView {
     
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)
-
     }
     
+    override func rightMouseDown(theEvent: NSEvent) {
+        NSMenu.popUpContextMenu(self.menu!, withEvent: theEvent, forView: self)
+    }
 }

@@ -35,6 +35,7 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
     @IBOutlet weak var pauseButton: NSButton?
     @IBOutlet weak var nextButton: NSButton?
     @IBOutlet weak var prevButton: NSButton?
+    @IBOutlet weak var playlistButton: NSButton?
     @IBOutlet weak var currentTime: NSTextField?
     @IBOutlet weak var totalTime: NSTextField?
     @IBOutlet weak var repeatCheckbox: NSButton?
@@ -96,6 +97,12 @@ class COPlaylistViewController : COViewController, COPlayQueueDelegate {
         if let button = sender as? NSButton {
             playQueue.repeat = button.state == NSOnState
         }
+    }
+    
+    @IBAction func showUpcomingSongs(sender: AnyObject) {
+        // TODO replace with a custom menu view
+        let event = NSApplication.sharedApplication().currentEvent
+        NSMenu.popUpContextMenu(self.playlistButton!.menu!, withEvent: event!, forView: self.view)
     }
     
     // MARK: Call back listeners
