@@ -270,7 +270,6 @@ class COPlayQueue : NSObject, AVAudioPlayerDelegate {
     private func emitNotification(name: String, object: AnyObject?, userInfo: [NSObject : AnyObject]? = nil) {
         let notificationCenter = NSNotificationCenter.defaultCenter()
         let notification = NSNotification(name: name, object: object, userInfo: userInfo)
-        println("Emiiting notification")
         notificationCenter.postNotification(notification)
     }
 }
